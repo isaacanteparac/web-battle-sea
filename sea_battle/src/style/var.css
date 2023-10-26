@@ -1,0 +1,33 @@
+:root{
+    --bg: #1c1e1e;
+    --externalRoundedEdge: 1.875rem;
+    --internalRoundedEdge: 1.25rem;
+    --outerBordersize: .1875rem;
+    --bgBoxes: #000000;
+    --fontColor: #fafafa;
+    --fontSize: 1.125rem;
+
+    /*NOTE: INPUT*/
+    --inputBoxWidth: 25%;
+    --inputBoxHeight:30px;
+    --inputComponetSize: 30px;
+
+    /*NOTE: SHIP SIZE*/
+    --shipComponentSize: 2.5rem;
+}
+
+
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+/* Estilos adicionales para dispositivos con un ancho de pantalla de hasta 400px (celulares en modo retrato) */
+@media screen and (max-width: 400px) {
+    body {
+        --fontSize: 1.25rem;
+        --inputBoxHeight:50px;
+        --inputComponetSize:50px;
+    }
+}

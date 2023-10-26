@@ -1,0 +1,24 @@
+.input {
+    background-color: red;
+    display: grid;
+    grid-template-columns: 90% 10%;
+    grid-template-rows: var(--inputComponetSize);
+    height: var(--inputBoxHeight);
+    font-size: var(--fontSize);
+    overflow: hidden;
+    border-radius: var(--internalRoundedEdge);
+    border: 1px solid black;
+    padding-inline: 2px;
+}
+
+.input input {
+    font-size: inherit;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.input button {
+    font-size: inherit;
+    border: none;
+}

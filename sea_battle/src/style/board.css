@@ -1,0 +1,24 @@
+.boxContainer {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 5px; /* Espacio entre las cajas */
+    width: 100%; /* Ajusta el ancho según tus necesidades */
+    height: 300px; /* Ajusta la altura según tus necesidades */
+    background-color: green;
+  }
+  
+  .box {
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .box label{
+    text-transform: uppercase;
+  }
+
