@@ -1,26 +1,26 @@
-.ship_size{
+.ship_size {
     display: grid;
     grid-template-columns: 25% 90%;
     grid-template-rows: var(--shipComponentSize);
     padding-block: 5px;
-
+    width: 100%;
+    overflow: hidden;
 }
 
-.ship_size label{
+.ship_size label {
     font-size: var(--fontSize);
     text-transform: capitalize;
     text-align: left;
 }
 
-.nShip{
+.nShip {
     display: flex;
     gap: .3125rem;
 }
 
-.nShip div{
+.nShip div {
     width: var(--shipComponentSize);
     height: var(--shipComponentSize);
     border-radius: calc(var(--shipComponentSize)/3);
     background-color: black;
 }
-
