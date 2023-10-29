@@ -13,7 +13,7 @@ function ShipSize(props) {
 
     return (<div className='ship_size'>
         <label>
-            {props.name}
+            {props.name} {props.amount}
         </label>
         <div className='nShip'>
             {size()}

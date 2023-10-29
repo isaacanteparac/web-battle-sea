@@ -1,0 +1,46 @@
+.layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+    padding-bottom: 20px;
+
+}
+
+.title{
+    color: var(--fontColor);
+}
+
+.textWait{
+    color: var(--fontColorWait);
+    font-size: 20px;
+    animation: blink 1s infinite alternate;
+
+}
+
+
+.boardContainer {
+    background-color: var(--boardContainerBg);
+    width: var(--boxboardContainerWidth);
+    padding: 5px;
+    overflow: hidden;
+    border-radius: var(--internalRoundedEdge);
+    border: var(--outerBordersize) solid var(--borderColor);
+    box-shadow: 5px 5px var(--borderColor);
+}
+
+.divColumn {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

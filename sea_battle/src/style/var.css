@@ -1,19 +1,37 @@
-:root{
-    --bg: #1c1e1e;
+:root {
+    --bg: #faad98;
     --externalRoundedEdge: 1.875rem;
     --internalRoundedEdge: 1.25rem;
     --outerBordersize: .1875rem;
+    --innerBorderSize: .125rem;
     --bgBoxes: #000000;
-    --fontColor: #fafafa;
+    --fontColor: #000000;
     --fontSize: 1.125rem;
+    --borderColor: #0e0d13;
+    --fontColorWait:#000000;
+
 
     /*NOTE: INPUT*/
-    --inputBoxWidth: 25%;
-    --inputBoxHeight:30px;
-    --inputComponetSize: 30px;
+    --inputBoxWidth: 100%;
+    --inputBoxHeight: 50px;
+    --inputComponetSize: 50px;
+    --inputBoxBg: #FFFFFF;
+    --fontColorInput: #000000;
 
     /*NOTE: SHIP SIZE*/
     --shipComponentSize: 2.5rem;
+
+    /*NOTE: BOX INFORMATION*/
+    --initialBoxInformationWidth: 45%;
+    --initialBoxInformationHeight: auto;
+    --boxInformationBg: #fcf4e7;
+
+    /*NOTE: BOARD*/
+    --boxBoardHeight: 500px;
+    --boxboardContainerWidth: 70%;
+    --boxColorCircle: #b5d29a;
+    --boardContainerBg: #fcf4e7;
+    --fontColorCircleBoard: #000000;
 }
 
 
@@ -21,13 +39,47 @@
     body {
         font-size: 14px;
     }
+
 }
 
 /* Estilos adicionales para dispositivos con un ancho de pantalla de hasta 400px (celulares en modo retrato) */
 @media screen and (max-width: 400px) {
-    body {
+    :root {
+        --bg: #5f3cf0;
+        --borderColor: #0107f1;
+        --boxInformationBg: #3376fa;
+        --boardContainerBg: var(--boxInformationBg);
+        --fontColor: #FFFFFF;
+        --boxColorCircle: #Ece008;
+        --fontColorCircleBoard: #423f02;
         --fontSize: 1.25rem;
-        --inputBoxHeight:50px;
-        --inputComponetSize:50px;
+        --inputBoxHeight: 3.125rem;
+        --inputComponetSize: 3.125rem;
+        --initialBoxInformationWidth: 85%;
+        --boxBoardHeight: 22.5rem;
+        --boxboardContainerWidth: 95%;
+        --fontColorWait: #6cf978;
     }
+
+    body {
+        .ship_size {
+            grid-template-columns: 40% 60%;
+        }
+    }
+
+    .layout {
+        padding-inline: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0px;
+    }
+
+
+    .layout .divColumn {
+        width: 100%;
+    }
+
+
+
 }

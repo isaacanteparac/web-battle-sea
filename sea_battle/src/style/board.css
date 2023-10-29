@@ -1,24 +1,29 @@
 .boxContainer {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    gap: 5px; /* Espacio entre las cajas */
-    width: 100%; /* Ajusta el ancho según tus necesidades */
-    height: 300px; /* Ajusta la altura según tus necesidades */
-    background-color: green;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    gap: 5px;
+    width: 100%;
+    height: var(--boxBoardHeight);
   }
   
   .box {
-    background-color: #ffffff;
-    width: 100%;
-    height: 100%;
     display:  flex;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--boxColorCircle);
+    box-shadow: 3px 3px #0000006f;
+
   }
 
   .box label{
     text-transform: uppercase;
+    color: var(--fontColorCircleBoard);
+    font-weight: 600;
+    user-select: none;
+
   }
 

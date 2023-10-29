@@ -1,28 +1,36 @@
-const Ship = [
-    {
+const Ship = {
+    mini:{
         name: "mini",
-        "displayName": "Mini",
+        displayName: "Mini",
         size: 1,
-        color: "#dc5a10"
+        amount:4,
+        symbol: "1",
+        color: "#f96ced"
     },
-    {
+    small:{
         name: "small",
         "displayName": "Pequeño",
         size: 2,
-        color: "#ac10dc"
+        amount:3,
+        symbol: "2",
+        color: "#f9be6c"
     },
-    {
+    big:{
         name: "big",
-        "displayName": "Grande",
+        displayName: "Grande",
         size: 3,
-        color: "#dcac10"
+        amount:2,
+        symbol: "3",
+        color: "#6ca7f9"
     },
-    {
-        name: "giant",
-        "displayName": "Gigante",
+    gigant:{
+        name: "gigant",
+        displayName: "Gigante",
         size: 4,
-        color: "#10dcac"
+        amount:1,
+        symbol: "4",
+        color: "#6cf978"
     },
-]
+}
 
 export default Ship;

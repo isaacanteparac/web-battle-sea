@@ -1,5 +1,6 @@
 body{
-  background-color: (--bg);
+  background-color: var(--bg);
+  font-family: 'Aldrich', sans-serif;
 }
 
 .App {
@@ -8,6 +9,18 @@ body{
 
 .App-link {
   color: #61dafb;
+}
+
+.startInformation{
+  background-color: var(--boxInformationBg);
+  width: var(--initialBoxInformationWidth);
+  height: var(--initialBoxInformationHeight);
+  border: var(--outerBordersize) solid var(--borderColor);
+  padding: .625rem;
+  margin: auto;
+  margin-top: 10px;
+  border-radius: var(--externalRoundedEdge);
+  box-shadow: 5px 5px var(--borderColor);
 }
 
 

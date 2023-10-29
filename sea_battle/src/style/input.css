@@ -1,5 +1,4 @@
 .input {
-    background-color: red;
     display: grid;
     grid-template-columns: 90% 10%;
     grid-template-rows: var(--inputComponetSize);
@@ -7,8 +6,8 @@
     font-size: var(--fontSize);
     overflow: hidden;
     border-radius: var(--internalRoundedEdge);
-    border: 1px solid black;
-    padding-inline: 2px;
+    border: var(--innerBorderSize) solid var(--borderColor);
+    background-color: var(--inputBoxBg);
 }
 
 .input input {
@@ -16,9 +15,22 @@
     border: none;
     outline: none;
     background-color: transparent;
+    color: var(--fontColorInput);
 }
 
-.input button {
+.input > button {
     font-size: inherit;
     border: none;
+    font-weight: 900;
+    font-size: 30px;
+    background-color: #f96c95;
+    color: #ffffff;
 }
+
+
+
+.input > button:active {
+
+    background-color: #ae4c68;
+}
+

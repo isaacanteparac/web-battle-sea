@@ -1,6 +1,6 @@
 .ship_size {
     display: grid;
-    grid-template-columns: 25% 90%;
+    grid-template-columns: 30% 70%;
     grid-template-rows: var(--shipComponentSize);
     padding-block: 5px;
     width: 100%;
@@ -11,12 +11,17 @@
     font-size: var(--fontSize);
     text-transform: capitalize;
     text-align: left;
+    display: flex;
+    align-items: center;
+    color: var(--fontColor);
 }
 
 .nShip {
     display: flex;
     gap: .3125rem;
 }
+
+
 
 .nShip div {
     width: var(--shipComponentSize);
