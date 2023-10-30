@@ -3,6 +3,7 @@ import { random_ } from "./randomShips.js";
 export default class Singleton {
     constructor() {
         if (Singleton.instance) {
+
             return Singleton.instance;
         }
 
@@ -15,7 +16,7 @@ export default class Singleton {
     addNickname(newNickname) {
         if (!this.players.hasOwnProperty(newNickname)) {
             random_.run();
-            this.players[newNickname.replace(/[^\w\s]/gi, '').replace(/\s+/g, '')] = { board: random_.getMatrix(), inGame: false, room: ""};
+            this.players[newNickname.replace(/[^\w\s]/gi, '').replace(/\s+/g, '')] = { board: random_.getMatrix(), inGame: false, idRoom: "" };
             return true;
         } else {
             console.log("ya existe usuario")
@@ -32,9 +33,6 @@ export default class Singleton {
         return this.rooms;
     }
 
-    setData(data) {
-        this.players = data;
-    }
 }
 
 /*

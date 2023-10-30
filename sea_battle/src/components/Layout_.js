@@ -1,66 +1,41 @@
-import React, {useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetch_ } from '../util/fetch';
 import { io } from "socket.io-client";
 import ShipSize from './ShipSize';
 import Board from './Board';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+import Input_ from './Input_';
 
-function Layout(props) {
+
+function Layout() {
     const [boatSizeData, setboatSizeData] = useState();
-    const [matrixData, setMatrixData] = useState()
-    const [nickname, setNickname] = useState("")
-    const [title, setTitle] = useState("Mi tablero")
-    const [showBoard, setShowBoard] = useState(false)
-
-    const serverPort = process.env.REACT_APP_API_URL
-    const socket = io(serverPort);
-
-    const send = () => {
-        if (nickname != "") {
-
-            if (Object.keys(loadPlayer).length === 0) {
-                socket.emit("nickname", nickname);
-            }
-            setNickname("")
-            loadDataMatrix()
-            setTitle(`Tablero de "${nickname}"`)
-            setShowBoard(true)
-            loadboatSizeData()
-        }
-    }
-
-    const loadPlayer = async () => {
-        const d = await fetch_("player/" + nickname)
-        return d
-    }
-
-    const loadDataMatrix = async () => {
-        const d = await fetch_("player/matrix/" + nickname)
-        setMatrixData(d)
-    }
+    const system = useSelector((state) => state.system)
+    const user = useSelector((state) => state.user)
 
     const loadboatSizeData = async () => {
-        let d = await fetch_("ship")
-        setboatSizeData(Object.values(d))
+        let data = await fetch_("ship")
+        setboatSizeData(Object.values(data))
     }
 
-    return (<div className='layout'>
-        {showBoard ? (<div className='divColumn'>
-            <h2 className='title'>{title}</h2>
-            <div className='boardContainer'>
-                <Board json={matrixData} />
-            </div>
-        </div>) : null}
+    useEffect(() => { loadboatSizeData() }, [])
 
-        <div className='startInformation'>
-            {!showBoard ? (<div className='input'>
-                <input placeholder="nickname" type='text' value={nickname} onChange={(e) => setNickname(e.target.value)} />
-                <button onClick={() => send()}>{">"}</button>
+    return (<div className='layout'>
+        {system.showMyBoard ? (
+            <div className='divColumn'>
+                <h2 className='title'>{system.textMyBoard}</h2>
+                <div className='boardContainer'>
+                    <Board json={user.board} />
+                </div>
             </div>) : null}
 
-            {showBoard ? (boatSizeData?.map((ship) => (
+        <div className='startInformation'>
+            {!system.showMyBoard ? (
+                <Input_ />) : null}
+            {system.showMyBoard ? (boatSizeData?.map((ship) => (
                 <ShipSize key={ship.name} name={ship.displayName} nSize={ship.size} color={ship.color} amount={ship.amount} />
             ))) : null}
         </div>
+
     </div>);
 }
 

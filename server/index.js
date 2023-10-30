@@ -29,6 +29,18 @@ io.on("connection", (socket) => {
         instance.addNickname(nickname)
         io.emit("msg", "te respondo autentico mierda");
     })
+
+    socket.on("players avalibles", (pa) => {
+        const playersData = instance.getPlayers()
+        const filteredPlayers = Object.keys(playersData)
+            .filter(playerName => !playersData[playerName].inGame)
+            .map(playerName => ({
+                nickname: playerName,
+                inGame: playersData[playerName].inGame
+            }));
+            console.log(pa)
+        io.emit("players avalibles", filteredPlayers);
+    })
 })
 
 

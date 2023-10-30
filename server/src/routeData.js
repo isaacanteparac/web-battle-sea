@@ -27,23 +27,10 @@ routeData.get("/position/column", (req, res) => {
     res.json(Column);
 });
 
-routeData.get("/player/matrix/:nickname", (req, res) => {
-    const nickname = req.params.nickname;
-    const data = singleton.getPlayers();
-    const playerData = data[noSpace(nickname)];
-
-    if (playerData && playerData["board"]) {
-        res.json(playerData["board"]);
-    } else {
-        res.json({});
-    }
-});
 
 routeData.get("/player/:nickname", (req, res) => {
-    const nickname = req.params.nickname;
     const data = singleton.getPlayers();
-    const playerData = data[noSpace(nickname)];
-
+    const playerData = data[noSpace(req.params.nickname)];
     if (playerData) {
         res.json(playerData);
     } else {
@@ -55,8 +42,54 @@ routeData.get("/all/players", (req, res) => {
     res.json(singleton.getPlayers());
 });
 
-routeData.get("/players/nickname", (req, res) => {
-    res.json(singleton.getPlayers());
+routeData.get("/players/avalibles", (req, res) => {
+    const playersData = singleton.getPlayers()
+    const filteredPlayers = Object.keys(playersData)
+        .filter(playerName => !playersData[playerName].inGame)
+        .map(playerName => ({
+            nickname: playerName,
+            inGame: playersData[playerName].inGame
+        }));
+    res.json(filteredPlayers);
+});
+
+routeData.get("/room/:idroom", (req, res) => {
+    const data = singleton.getRooms();
+    const roomData = data[noSpace(req.params.idroom)];
+    if (roomData) {
+        res.json(roomData);
+    } else {
+        res.json({});
+    }
+
+});
+
+
+routeData.get("/all/rooms", (req, res) => {
+    res.json(singleton.getRooms())
+});
+
+
+routeData.post("/create/room", (req, res) => {
+    const { player1, player2 } = req.body;
+    const data = singleton.getPlayers();
+    const dataPlayer1 = data[player1];
+    const dataPlayer2 = data[player2];
+    const rooms = singleton.getRooms();
+    let repeat = true;
+    while (repeat) {
+        const nameRoom = `rm_${Math.floor(Math.random() * 1000)}`;
+        if (!rooms.hasOwnProperty(nameRoom)) {
+            rooms[nameRoom] = { player1, player2 };
+            dataPlayer1["inGame"] = true
+            dataPlayer1["idRoom"] = nameRoom
+
+            dataPlayer2["idRoom"] = nameRoom
+            dataPlayer2["inGame"] = true
+            repeat = false
+            res.json({ "idRoom": nameRoom });
+        }
+    }
 });
 
 

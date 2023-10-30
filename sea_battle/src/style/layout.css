@@ -7,16 +7,11 @@
 
 }
 
-.title{
+.title {
     color: var(--fontColor);
 }
 
-.textWait{
-    color: var(--fontColorWait);
-    font-size: 20px;
-    animation: blink 1s infinite alternate;
 
-}
 
 
 .boardContainer {
@@ -36,10 +31,21 @@
     align-items: center;
 }
 
+.textWait {
+    color: var(--fontColorWait);
+    font-size: 20px;
+}
+
+.textblink {
+    animation: blink 1s infinite alternate;
+
+}
+
 @keyframes blink {
     from {
         opacity: 1;
     }
+
     to {
         opacity: 0;
     }
