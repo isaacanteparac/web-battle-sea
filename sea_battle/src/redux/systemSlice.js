@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
+
 const initialState = {
     showTextWait: false,
     showMyBoard: false,
-    textMyBoard: "Mi tablero"
+    showMyLayout: true,
+    showEnemyLayout: false,
+    textMyBoard: "Mi tablero",
 
 }
 
@@ -16,13 +19,18 @@ export const systemSlice = createSlice({
         setShowMyBoard: (state, action) => {
             state.showMyBoard = action.payload;
         },
-        setTextMyBoardd: (state, action) => {
+        setTextMyBoard: (state, action) => {
             state.textMyBoard = action.payload;
-        }
+        },
+        setMyLayout: (state, action) => {
+            state.showMyLayout = action.payload;
+        },
 
-
+        setEnemyLayout: (state, action) => {
+            state.showEnemyLayout = action.payload;
+        },
     }
 })
 
-export const { setShowTextWait, setShowMyBoard, setTextMyBoardd } = systemSlice.actions;
+export const { setShowTextWait, setShowMyBoard, setTextMyBoard, setMyLayout, setEnemyLayout } = systemSlice.actions;
 export default systemSlice.reducer;

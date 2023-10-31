@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { fetch_ } from '../util/fetch';
-import { io } from "socket.io-client";
 import ShipSize from './ShipSize';
 import Board from './Board';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import Input_ from './Input_';
 
 
-function Layout() {
+function MyLayout() {
     const [boatSizeData, setboatSizeData] = useState();
-    const system = useSelector((state) => state.system)
     const user = useSelector((state) => state.user)
+    const system = useSelector((state) => state.system);
 
     const loadboatSizeData = async () => {
         let data = await fetch_("ship")
         setboatSizeData(Object.values(data))
     }
 
-    useEffect(() => { loadboatSizeData() }, [])
+    useEffect(() => { loadboatSizeData()}, [])
 
     return (<div className='layout'>
         {system.showMyBoard ? (
             <div className='divColumn'>
                 <h2 className='title'>{system.textMyBoard}</h2>
                 <div className='boardContainer'>
-                    <Board json={user.board} />
+                    <Board json={user.board} button={false}/>
                 </div>
             </div>) : null}
 
@@ -39,4 +38,4 @@ function Layout() {
     </div>);
 }
 
-export default Layout;
+export default MyLayout;

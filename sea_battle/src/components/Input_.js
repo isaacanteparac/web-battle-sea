@@ -1,73 +1,56 @@
 import React, { useEffect, useState } from 'react';
 
-import { io } from "socket.io-client";
 import { useDispatch } from 'react-redux';
 import { fetch_ } from '../util/fetch';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { setShowTextWait, setShowMyBoard, setTextMyBoardd } from '../redux/systemSlice';
-import { changeBoard, changeIdRoom, changeInGame, changeNickname, changeNicknameEnemy } from '../redux/userSlice';
+import { setShowTextWait, setShowMyBoard, setTextMyBoard } from '../redux/systemSlice';
+import { changeBoard, changeNickname, changeIdNicknameEnemy, changeIdUser } from '../redux/userSlice';
+import { io } from 'socket.io-client';
 
 
 
 function Input_() {
 
     const [showOptions, setShowOptions] = useState(false)
-    const serverPort = process.env.REACT_APP_API_URL
-    const socket = io(serverPort);
     const user = useSelector((state) => state.user)
+    const socket = io(process.env.REACT_APP_API_URL)
     const dispatch = useDispatch()
 
-
-    const send = () => {
-        if (user.nickname != "") {
-            if (Object.keys(loadPlayer).length === 0) {
-                socket.emit("nickname", user.nickname);
-            }
-            if (!showOptions) {
-                restore();
-            }
-
+    const createNewUser = async () => {
+        const newUser = await fetch_("create/player", { "nickname": user.nickname }, "POST")
+        //tengo un problema no se actualisa el estado , ya use promise, pero no se actualiza, por eso retrono el nickname
+        //para poder crear el room
+        dispatch(changeIdUser(newUser["idUser"]))
+        dispatch(changeBoard(newUser["board"]))
+        if (!showOptions) {
+            restore();
         }
+        return newUser["idUser"]
+
     }
+
 
     const restore = () => {
-        loadPlayer(true);
         dispatch(setShowTextWait(true))
         dispatch(setShowMyBoard(true))
-        dispatch(setTextMyBoardd(`Tablero de "${user.nickname}"`))
-
+        dispatch(setTextMyBoard(`Tablero de "${user.nickname}"`))
     }
 
-    const loadPlayer = async (load = false) => {
-        let data = await fetch_("player/" + user.nickname)
-        if (load) {
-            dispatch(changeBoard(data["board"]))
-        }
-        return data
-    }
 
     const createRoom = async () => {
-        send()
-        if (user.nicknameEnemy != "") {
-            const newRoom = { player1: user.nickname, player2: user.nicknameEnemy }
-            const idRoom = await fetch_("create/room", newRoom, "POST")
-            if (idRoom) {
-                dispatch(changeInGame(true));
-                dispatch(changeIdRoom(idRoom));
-                console.log(idRoom);
-            }
-        }
+        const n = await createNewUser()
+        dispatch(changeIdUser(n))
+        await fetch_("create/room", { player1: n }, "POST")
         restore()
-
-
     }
 
     socket.on("players avalibles", (data) => {
         if (data.length > 0) {
-            dispatch(changeNicknameEnemy(data[0]["nickname"]))
+            dispatch(changeIdNicknameEnemy(data[0]["nickname"]))
             setShowOptions(true)
         }
     })
+
 
     useEffect(() => { socket.emit("players avalibles", "") }, [])
 
@@ -76,12 +59,12 @@ function Input_() {
 
         <div className='inputBox'>
             <input placeholder="nickname" type='text' value={user.nickname} onChange={(e) => dispatch(changeNickname(e.target.value))} />
-            {!showOptions ? (<button className="send" onClick={() => send()}>{">"}</button>) : null}
+            {!showOptions ? (<button className="send" onClick={() => createNewUser()}>{">"}</button>) : null}
         </div>
         {showOptions ? (<>
             <label className='textWait'>{"VS"}</label>
             <div className='inputBox'>
-                <input placeholder="nickname" type='text' value={user.nicknameEnemy} disabled={true} />
+                <input placeholder="nickname" type='text' value={user.idNicknameEnemy} disabled={true} />
             </div>
             <button className="send keep" onClick={() => createRoom()}>{"Guardar"}</button></>) : null
         }

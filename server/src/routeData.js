@@ -2,6 +2,7 @@ import express from "express";
 import Ship from "./data/Ship.js";
 import Element from "./data/Element.js";
 import { Column, Row } from "./data/Position.js";
+import { matrix } from "./data/matrix.js";
 import Singleton from "./Singleton.js";
 
 const routeData = express.Router();
@@ -11,6 +12,7 @@ function noSpace(text) {
     return text.replace(/[^\w\s]/gi, '').replace(/\s+/g, '')
 }
 
+/*NOTE: DATA DEFAULT */
 routeData.get("/ship", (req, res) => {
     res.json(Ship);
 });
@@ -27,6 +29,10 @@ routeData.get("/position/column", (req, res) => {
     res.json(Column);
 });
 
+routeData.get("/matrix/default", (req, res) => {
+    res.json(matrix);
+});
+
 
 routeData.get("/player/:nickname", (req, res) => {
     const data = singleton.getPlayers();
@@ -36,6 +42,25 @@ routeData.get("/player/:nickname", (req, res) => {
     } else {
         res.json({});
     }
+});
+
+/*NOTE: PLAYERS */
+routeData.post("/create/player", (req, res) => {
+    const { nickname } = req.body
+    let repeat = true
+    while (repeat) {
+        const players = singleton.getPlayers();
+        const newNickname = `${noSpace(nickname)}${Math.floor(Math.random() * 1000)}`;
+        if (!players.hasOwnProperty(newNickname)) {
+            singleton.addNickname(newNickname)
+            console.log(newNickname)
+            repeat = false
+            const data = singleton.getPlayers()
+            data[newNickname]["idUser"] = newNickname
+            res.json(data[newNickname])
+        }
+    }
+
 });
 
 routeData.get("/all/players", (req, res) => {
@@ -53,6 +78,7 @@ routeData.get("/players/avalibles", (req, res) => {
     res.json(filteredPlayers);
 });
 
+/*NOTE: ROOMS */
 routeData.get("/room/:idroom", (req, res) => {
     const data = singleton.getRooms();
     const roomData = data[noSpace(req.params.idroom)];
@@ -64,31 +90,45 @@ routeData.get("/room/:idroom", (req, res) => {
 
 });
 
-
 routeData.get("/all/rooms", (req, res) => {
     res.json(singleton.getRooms())
 });
 
-
 routeData.post("/create/room", (req, res) => {
-    const { player1, player2 } = req.body;
-    const data = singleton.getPlayers();
-    const dataPlayer1 = data[player1];
-    const dataPlayer2 = data[player2];
-    const rooms = singleton.getRooms();
-    let repeat = true;
-    while (repeat) {
-        const nameRoom = `rm_${Math.floor(Math.random() * 1000)}`;
-        if (!rooms.hasOwnProperty(nameRoom)) {
-            rooms[nameRoom] = { player1, player2 };
-            dataPlayer1["inGame"] = true
-            dataPlayer1["idRoom"] = nameRoom
+    const { player1 } = req.body;
+    try {
+        const players = singleton.getPlayers();
+        const rooms = singleton.getRooms();
+        let repeat = true;
 
-            dataPlayer2["idRoom"] = nameRoom
-            dataPlayer2["inGame"] = true
-            repeat = false
-            res.json({ "idRoom": nameRoom });
+        console.log(player1)
+
+        while (repeat) {
+            const nameRoom = `rm_${Math.floor(Math.random() * 1000)}`;
+            if (!rooms.hasOwnProperty(nameRoom)) {
+                if (players[player1]) {
+                    const filteredPlayers = Object.keys(players)
+                        .filter(playerName => !players[playerName].inGame)
+                        .map(playerName => ({
+                            nickname: playerName,
+                            inGame: players[playerName].inGame
+                        }));
+                    const player2 = filteredPlayers
+                    rooms[nameRoom] = { player1, player2: player2[0]["nickname"], isActive: true };
+                    players[player1].inGame = true;
+                    players[player1].idRoom = nameRoom;
+                    players[player2[0]["nickname"]].inGame = true;
+                    players[player2[0]["nickname"]].idRoom = nameRoom;
+                    repeat = false;
+                    res.json({ idRoom: nameRoom });
+                } else {
+                    res.status(400).json({ error: "Jugadores no encontrados" });
+                }
+            }
         }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

@@ -4,13 +4,19 @@
     align-items: center;
     row-gap: 20px;
     padding-bottom: 20px;
-
 }
+
+
 
 .title {
     color: var(--fontColor);
 }
 
+.subTitle{
+    color: var(--fontColor);
+    text-transform: capitalize;
+    font-size: 18px;
+}
 
 
 
@@ -24,12 +30,22 @@
     box-shadow: 5px 5px var(--borderColor);
 }
 
+  
 .divColumn {
-    width: 50%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+.manyBoards {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
 
 .textWait {
     color: var(--fontColorWait);

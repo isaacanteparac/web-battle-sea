@@ -16,7 +16,7 @@ export default class Singleton {
     addNickname(newNickname) {
         if (!this.players.hasOwnProperty(newNickname)) {
             random_.run();
-            this.players[newNickname.replace(/[^\w\s]/gi, '').replace(/\s+/g, '')] = { board: random_.getMatrix(), inGame: false, idRoom: "" };
+            this.players[newNickname.replace(/[^\w\s]/gi, '').replace(/\s+/g, '')] = { board: random_.getMatrix(), inGame: false, idRoom: "", score: 200 };
             return true;
         } else {
             console.log("ya existe usuario")
