@@ -32,6 +32,8 @@
     --boxColorCircle: #b5d29a;
     --boardContainerBg: #fcf4e7;
     --fontColorCircleBoard: #000000;
+    --fontColorActionBtnCircle: #000000;
+
 }
 
 
@@ -51,7 +53,6 @@
         --boardContainerBg: var(--boxInformationBg);
         --fontColor: #FFFFFF;
         --boxColorCircle: #Ece008;
-        --fontColorCircleBoard: #423f02;
         --fontSize: 1.25rem;
         --inputBoxHeight: 3.125rem;
         --inputComponetSize: 3.125rem;
@@ -59,6 +60,8 @@
         --boxBoardHeight: 22.5rem;
         --boxboardContainerWidth: 95%;
         --fontColorWait: #6cf978;
+        --fontColorActionBtnCircle: #FFFFFF;
+
     }
 
     body {

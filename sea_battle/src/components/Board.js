@@ -1,5 +1,4 @@
 import React from 'react';
-import { io } from 'socket.io-client';
 import ButtonAttack from './ButtonAttack';
 
 function Board(props) {
@@ -13,23 +12,22 @@ function Board(props) {
         } else if (element === 'ocean') {
             return 'white';
         }
-        return '#Ece008';
     };
 
 
     const buttonOrDiv = (colIndex, element, type, position) => {
         if (props.button) {
             return (
-                <ButtonAttack colIndex={colIndex} color={getColorByElement(element, type)} position={position} />
+                <ButtonAttack key={"b" + colIndex} colIndex={colIndex} position={position} />
             )
         } else {
             return (
                 <div
                     key={colIndex}
                     className="circle"
-                    style={{ backgroundColor: getColorByElement(element, type) }}
+                    style={{ backgroundColor: getColorByElement(element, type), color: "#FFFFFF" }}
                 >
-                    <label className='textCircle'>{`${position}`}</label>
+                    <label className='textCircle' >{`${position}`}</label>
                 </div>
             )
         }

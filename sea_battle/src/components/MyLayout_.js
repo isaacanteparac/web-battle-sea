@@ -10,9 +10,10 @@ function MyLayout() {
     const [boatSizeData, setboatSizeData] = useState();
     const user = useSelector((state) => state.user)
     const system = useSelector((state) => state.system);
+    const urlShips = "ship"
 
     const loadboatSizeData = async () => {
-        let data = await fetch_("ship")
+        let data = await fetch_(urlShips)
         setboatSizeData(Object.values(data))
     }
 

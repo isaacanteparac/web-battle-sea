@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
+
+
 const initialState = {
     idUser: "",
     nickname: "",
@@ -7,15 +9,26 @@ const initialState = {
     board: null,
     score: 0,
     idNicknameEnemy: "",
-    enemyBoard: null
+    defaultBoard: null,
 }
 
 export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        newUser: (state, action) => {
-            const { nickname, inGame, idRoom, board } = action.payload;
+        updateUser: (state, action) => {
+            const { idUser,
+                nickname,
+                inGame,
+                idRoom,
+                board,
+                score,
+                idNicknameEnemy,
+                defaultBoard } = action.payload;
+            state.idUser = idUser;
+            state.score = score;
+            state.idNicknameEnemy = idNicknameEnemy;
+            state.defaultBoard = defaultBoard;
             state.nickname = nickname;
             state.inGame = inGame;
             state.idRoom = idRoom;
@@ -42,11 +55,12 @@ export const userSlice = createSlice({
         changeIdNicknameEnemy: (state, action) => {
             state.idNicknameEnemy = action.payload;
         },
-        changeEnemyBoard: (state, action) => {
-            state.enemyBoard = action.payload;
-        }
+        changeDefaultBoard: (state, action) => {
+            state.defaultBoard = action.payload;
+        },
+   
     }
 })
 
-export const { newUser, changeIdUser, changeIdRoom, changeBoard, changeInGame, changeNickname, changeIdNicknameEnemy, changeEnemyBoard, changeScore } = userSlice.actions;
+export const { updateUser, changeIdUser, changeIdRoom, changeBoard, changeInGame, changeNickname, changeIdNicknameEnemy, changeDefaultBoard, changeScore } = userSlice.actions;
 export default userSlice.reducer;

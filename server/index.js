@@ -24,9 +24,9 @@ const instance = new Singleton();
 
 io.on("connection", (socket) => {
     //console.log("usuario conectado")
-    socket.on("disconnect", () => {
+    /*socket.on("disconnect", () => {
         console.log("usuario desconectado")
-    })
+    })*/
 
     socket.on("players avalibles", async (pa) => {
         const playersData = instance.getPlayers()
@@ -54,18 +54,28 @@ io.on("connection", (socket) => {
     socket.on("attack", async (newAttack) => {
         const players = instance.getPlayers();
         const enemy = players[newAttack["idNicknameEnemy"]]
+        const user = players[newAttack["idUser"]]
         if (enemy["score"] > 0) {
             enemy["score"] -= 10
         }
         const enemyBoard = enemy["board"]
         const row = newAttack["coordinate"].slice(0, 2);
         const column = newAttack["coordinate"].slice(2);
-        enemyBoard[row][column]["element"] = Element.BOMB
-        enemyBoard[row][column]["vital"] = VitalConditions.DEAD
-        console.log(row)
-        console.log(column)
-        console.log(enemyBoard[row][column])
-        console.log(newAttack)
+        const element = enemyBoard[row][column]["element"]
+        if (element == Element.OCEAN || element == Element.BOMB) {
+            user["color"] = "btnBlue"
+            user["yourTurn"] = false
+            enemy["yourTurn"] = true
+        } else {
+            enemyBoard[row][column]["element"] = Element.BOMB
+            enemyBoard[row][column]["vital"] = VitalConditions.DEAD
+            enemy["yourTurn"] = true
+            user["color"] = "btnRed"
+            user["yourTurn"] = false
+        }
+        socket.emit("attack", user["color"])
+
+        //console.log(newAttack)
     })
 })
 

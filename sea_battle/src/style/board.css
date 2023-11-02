@@ -14,15 +14,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  border: none;
   background-color: var(--boxColorCircle);
   box-shadow: 3px 3px #0000006f;
-
 }
-
-.boxContainer button {
-  font-family: inherit;
-}
-
 
 .textCircle {
   text-transform: uppercase;
@@ -30,4 +25,49 @@
   font-weight: 600;
   user-select: none;
 
+}
+
+.btnCirle,
+.btnRed,
+.btnBlue {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background-color: white;
+  box-shadow: 3px 3px #0000006f;
+}
+
+.btnCirle:active {
+  box-shadow: inset 0px 0px 3px 3px #00000056;
+}
+
+
+
+.btnRed {
+  border: none;
+  box-shadow: inset 0px 0px 3px 3px #00000056;
+  background-color: #fc045b;
+}
+
+.btnRed label {
+  color: #FFFFFF;
+}
+
+.btnBlue label {
+  color: var(--fontColorActionBtnCircle);
+}
+
+
+.btnBlue {
+  border: none;
+  box-shadow: inset 0px 0px 1px 1px #00000056;
+  background-color: transparent;
+}
+
+.boxContainer .btnCirle {
+  font-family: inherit;
 }
