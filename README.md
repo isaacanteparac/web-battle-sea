@@ -4,11 +4,11 @@
 - ORM prisma (mmongodb)
 ## Instalacion
 1. Abrir la terminal e ingresar a la carpeta
-2. Ingresar a las sub carpetas server y sea_battle
-3. En cada uno de los directorios ejecutar npm i install(se instalara todos los modulos), repetir eso tantopara server como para sea_battle
+2. Ingresar a las sub directorio server y ui
+3. En cada uno de los directorios ejecutar npm i install(se instalara todos los modulos)
 4. Activar server
     - Una vez debtro del directorio de server ejecutar npm run dev
-5. Actibat sea_battle
+5. Activar ui
     - Una vez debtro del directorio de server ejecutar npm start
 6. implementacion de db muy pronto...
 
