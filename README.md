@@ -2,7 +2,7 @@
 - reactjs
 - redux
 - ORM prisma (mmongodb)
-## Instalcion
+## Instalacion
 1. Abrir la terminal e ingresar a la carpeta
 2. Ingresar a las sub carpetas server y sea_battle
 3. En cada uno de los directorios ejecutar npm i install(se instalara todos los modulos), repetir eso tantopara server como para sea_battle
