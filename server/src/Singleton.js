@@ -17,7 +17,13 @@ export default class Singleton {
         if (!this.players.hasOwnProperty(newNickname)) {
             random_.run();
             this.players[newNickname.replace(/[^\w\s]/gi, '').replace(/\s+/g, '')] = {
-                board: random_.getMatrix(), inGame: false, idRoom: "", score: 200, defaultBoard: random_.getDefaultMatrix(), yourTurn: false, color:""
+                board: random_.getMatrix(),
+                inGame: false,
+                idRoom: "",
+                score: 200,
+                defaultBoard: random_.getDefaultMatrix(),
+                yourTurn: false,
+                color:""
             };
             return true;
         } else {

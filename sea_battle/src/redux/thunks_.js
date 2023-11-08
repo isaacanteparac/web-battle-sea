@@ -22,22 +22,25 @@ thunks_.searchRooms = (data, user) => {
     const urlRoomId = "room/"
     return async (dispatch) => {
         const searchRoom = await fetch_(`${urlRoomId}${data["idRoom"]}`)
-        if (user.idNicknameEnemy == "") {
-            if (user.idUser == searchRoom["joinGame"]) {
+        if (user.idNicknameEnemy === "") {
+            if (user.idUser === searchRoom["joinGame"]) {
                 dispatch(changeIdNicknameEnemy(searchRoom["createdGame"]))
             } else {
                 dispatch(changeIdNicknameEnemy(searchRoom["joinGame"]))
-                dispatch(setYourTurn(true))
+                //dispatch(setYourTurn(true))
             }
         }
     }
 }
 
-thunks_.attackSend = (data) => {
+thunks_.attackSend = (socket, state) => {
     return async (dispatch) => {
-        dispatch(changeBoard(data["board"]))
-        dispatch(setYourTurn(data["yourTurn"]))
-        dispatch(changeScore(data["score"]))
+        socket.on("attack", async(data) => {
+            await dispatch(changeBoard(data["board"]))
+            await dispatch(setYourTurn(data["yourTurn"]))
+            await dispatch(changeScore(data["score"]))
+            state(data)
+        })
     }
 }
 

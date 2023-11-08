@@ -3,7 +3,7 @@ import Board from './Board';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 
 
-function EnemyLayout() {
+function EnemyLayout(props) {
     const user = useSelector((state) => state.user);
     const system = useSelector((state) => state.system);
 
@@ -15,7 +15,7 @@ function EnemyLayout() {
             <div className='manyBoards'>
                 <div className='boardContainer'>
                     <label className='subTitle'>{"Enemigo"}</label>
-                    <Board json={user.defaultBoard} button={true} />
+                    <Board json={user.defaultBoard} button={true} socket={props.socket}/>
                 </div>
                 <div className='boardContainer boardContainer2'>
                     <label className='subTitle'>{"Yo"}</label>

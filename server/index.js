@@ -23,12 +23,12 @@ app.use(express.urlencoded({ limit: "15mb", extended: true }))
 const instance = new Singleton();
 
 io.on("connection", (socket) => {
-    //console.log("usuario conectado")
-    /*socket.on("disconnect", () => {
+    console.log("usuario conectado")
+    socket.on("disconnect", () => {
         console.log("usuario desconectado")
-    })*/
+    })
 
-    socket.on("players avalibles", async (pa) => {
+    socket.on("players avalibles", async () => {
         const playersData = instance.getPlayers()
         const filteredPlayers = Object.keys(playersData)
             .filter(playerName => !playersData[playerName].inGame)
@@ -36,10 +36,7 @@ io.on("connection", (socket) => {
                 nickname: playerName,
                 inGame: playersData[playerName].inGame
             }));
-
         io.emit("players avalibles", filteredPlayers);
-
-
     })
 
 
@@ -73,9 +70,14 @@ io.on("connection", (socket) => {
             user["color"] = "btnRed"
             user["yourTurn"] = false
         }
-        socket.emit("attack", user["color"])
 
-        //console.log(newAttack)
+        const newData = {
+            board: user["board"],
+            yourTurn: user["yourTurn"],
+            color: user["color"],
+            score: user["score"]
+        }
+        socket.emit("attack", user["color"])
     })
 })
 
