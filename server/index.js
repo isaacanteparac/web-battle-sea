@@ -44,11 +44,14 @@ io.on("connection", (socket) => {
         const data = instance.getPlayers();
         const playerData = await data[nickname];
         if (playerData) {
+            console.log("socket data user ")
+            console.log(playerData)
             io.emit("data user", playerData);
         }
     })
 
     socket.on("attack", async (newAttack) => {
+        console.log(newAttack)
         const players = instance.getPlayers();
         const enemy = players[newAttack["idNicknameEnemy"]]
         const user = players[newAttack["idUser"]]
@@ -72,12 +75,23 @@ io.on("connection", (socket) => {
         }
 
         const newData = {
-            board: user["board"],
             yourTurn: user["yourTurn"],
             color: user["color"],
             score: user["score"]
         }
-        socket.emit("attack", user["color"])
+        socket.emit("attack", newData)
+    })
+
+    socket.on("update_board", async (nickname) => {
+        const data = instance.getPlayers();
+        if (nickname != "") {
+            const playerData = await data[nickname];
+            if (playerData) {
+                socket.emit("update_board", playerData["board"])
+
+            }
+        }
+
     })
 })
 
@@ -87,4 +101,3 @@ app.use("/data", routeData);
 
 server.listen(app.get("port"));
 console.log("SERVER PORT " + app.get("port"));
-

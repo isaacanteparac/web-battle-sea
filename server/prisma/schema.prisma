@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  inGame   Boolean
+  idRoom   String
+  score    Int
+  yourTurn Boolean
+  board    Json
+}
+
+model rooms {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  player_1 String
+  player_2 String
+  isActive Boolean
+}
+
+model sockect_name {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+}

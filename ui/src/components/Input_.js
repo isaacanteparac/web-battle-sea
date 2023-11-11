@@ -4,17 +4,19 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { setShowTextWait, setShowMyBoard, setTextMyBoard } from '../redux/systemSlice';
 import { changeNickname, changeIdNicknameEnemy } from '../redux/userSlice';
-import { io } from 'socket.io-client';
 import { thunks_ } from '../redux/thunks_';
+import Singleton from '../redux/Singleton';
 
 
 
-function Input_(props) {
+function Input_() {
 
     const [showOptions, setShowOptions] = useState(false)
     const user = useSelector((state) => state.user)
-    const socket = props.socket
     const dispatch = useDispatch()
+    const singleton = new Singleton()
+    const socket = singleton.getSocket()
+  
 
     const createNewUser = () => {
         dispatch(thunks_.createUserAndRoom(user))
@@ -43,7 +45,6 @@ function Input_(props) {
         if (!showOptions) {
             socket.emit("players avalibles", "")
             socket.on("players avalibles", (data) => {
-                console.log("load player")
                 if (data.length > 0) {
                     dispatch(changeIdNicknameEnemy(data[0]["nickname"]))
                     setShowOptions(true)

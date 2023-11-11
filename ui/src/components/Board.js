@@ -18,7 +18,7 @@ function Board(props) {
     const buttonOrDiv = (colIndex, element, type, position) => {
         if (props.button) {
             return (
-                <ButtonAttack key={"b" + colIndex} colIndex={colIndex} position={position} socket={props.socket}/>
+                <ButtonAttack key={"b" + colIndex} colIndex={colIndex} position={position}/>
             )
         } else {
             return (

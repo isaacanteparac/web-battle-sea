@@ -11,7 +11,6 @@ thunks_.createUserAndRoom = (user, bool = false) => {
         dispatch(updateUser(data1));
         if (bool) {
             const data = await fetch_(urlCreateRoom, { join: data1["idUser"] }, "POST")
-            dispatch(changeIdNicknameEnemy(data["createdGame"]));
             dispatch(changeIdRoom(data["idRoom"]));
             dispatch(changeInGame(data["avalible"]));
         }
@@ -22,24 +21,35 @@ thunks_.searchRooms = (data, user) => {
     const urlRoomId = "room/"
     return async (dispatch) => {
         const searchRoom = await fetch_(`${urlRoomId}${data["idRoom"]}`)
-        if (user.idNicknameEnemy === "") {
-            if (user.idUser === searchRoom["joinGame"]) {
-                dispatch(changeIdNicknameEnemy(searchRoom["createdGame"]))
-            } else {
-                dispatch(changeIdNicknameEnemy(searchRoom["joinGame"]))
-                //dispatch(setYourTurn(true))
-            }
+        if(user.idUser === searchRoom["createdGame"]){
+            await dispatch(changeIdNicknameEnemy(searchRoom["joinGame"]))
+        }else{
+            await dispatch(changeIdNicknameEnemy(searchRoom["createdGame"]))
+
         }
+
+        
+       
+
     }
 }
 
 thunks_.attackSend = (socket, state) => {
     return async (dispatch) => {
-        socket.on("attack", async(data) => {
-            await dispatch(changeBoard(data["board"]))
+        socket.on("attack", async (data) => {
             await dispatch(setYourTurn(data["yourTurn"]))
             await dispatch(changeScore(data["score"]))
-            state(data)
+            await state(data["color"])
+        })
+    }
+}
+
+thunks_.updateBoard = (socket, user) => {
+    return async (dispatch) => {
+        socket.emit("update_board", user)
+        socket.on("update_board", async (data) => {
+            await dispatch(changeBoard(data))
+
         })
     }
 }

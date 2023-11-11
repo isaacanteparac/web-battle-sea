@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 import Input_ from './Input_';
 
 
-function MyLayout(props) {
+function MyLayout() {
     const [boatSizeData, setboatSizeData] = useState();
     const user = useSelector((state) => state.user)
     const system = useSelector((state) => state.system);
@@ -29,8 +29,7 @@ function MyLayout(props) {
             </div>) : null}
 
         <div className='startInformation'>
-            {!system.showMyBoard ? (
-                <Input_ socket={props.socket}/>) : null}
+            {!system.showMyBoard ? (<Input_ />) : null}
             {system.showMyBoard ? (boatSizeData?.map((ship) => (
                 <ShipSize key={ship.name} name={ship.displayName} nSize={ship.size} color={ship.color} amount={ship.amount} />
             ))) : null}
