@@ -35,8 +35,6 @@ routeData.get("/matrix/default", (req, res) => {
 
 
 routeData.get("/player/:nickname", (req, res) => {
-    console.log("Nickname recibido:"+ req.params.nickname);
-
     const nickname = req.params.nickname.toString();
     const data = singleton.getPlayers();
     const playerData = data[noSpace(nickname)];
@@ -59,7 +57,6 @@ routeData.post("/create/player", (req, res) => {
             repeat = false
             const data = singleton.getPlayers()
             data[newNickname]["idUser"] = newNickname
-            console.log(newNickname)
             res.json(data[newNickname])
         }
     }
@@ -119,6 +116,7 @@ routeData.post("/create/room", (req, res) => {
                     players[join].idRoom = nameRoom;
                     players[player2[0]["nickname"]].inGame = true;
                     players[player2[0]["nickname"]].idRoom = nameRoom;
+                    players[player2[0]["nickname"]].yourTurn = true;
                     repeat = false;
                     const newRoom = singleton.getRooms()
                     const idRooms = newRoom[nameRoom]

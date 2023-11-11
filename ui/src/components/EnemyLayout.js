@@ -8,27 +8,22 @@ import Singleton from '../redux/Singleton';
 
 function EnemyLayout() {
     const user = useSelector((state) => state.user);
-    const system = useSelector((state) => state.system);
     const dispatch = useDispatch()
     const singleton = new Singleton()
     const socket = singleton.getSocket()
 
-
-
-    /*TODO: HACER QUE SE ACTUALICE AUTOMATICAMENTE PARA QUE SE ACTULIZE EL BOARD Y NO CADA VEZ QUE SE HAGA CLICK
-    CORREGIR EL BUG DEL CUANDO EL CREADOR NO PUEDE ENVIAR EL ATAQUE, SINO QUE SE ATACA ASI MISMO */
+    dispatch(thunks_.updateBoard(socket))
+    dispatch(thunks_.updateTurn(socket))
     useEffect(()=>{
-        dispatch(thunks_.updateBoard(socket, user.idUser))
+        socket.emit("update_board", user.idUser)
+        socket.emit("update_turn", user.idUser)
 
     })
-    //
-
-
 
     return (<div className='layout'>
         <div className='divColumn'>
             <h2 className='title'>{`${user.idUser} VS ${user.idNicknameEnemy}`}</h2>
-            {system.yourTurn ? (<h2 className='textWait textblink'>{`⌛ Tu Turno ⌛`}</h2>) : null}
+            {user.yourTurn ? (<h2 className='textWait textblink'>{`⌛ Tu Turno ⌛`}</h2>) : (<h2 className='textWait textblink'>{`⌛ Espera Ataque ⌛`}</h2>)}
             <div className='manyBoards'>
                 <div className='boardContainer'>
                     <label className='subTitle'>{"Enemigo"}</label>

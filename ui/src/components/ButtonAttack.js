@@ -10,21 +10,17 @@ function ButtonAttack(props) {
     const [classColor, setClassColor] = useState("btnCirle")
     const singleton = new Singleton()
     const socket = singleton.getSocket()
-  
-
-
 
     const attackSend = () => {
-        if (classColor === "btnCirle") {
-            const data = { coordinate: props.position, idUser: user.idUser, idNicknameEnemy: user.idNicknameEnemy }
-            socket.emit("attack", data)
-            dispatch(thunks_.attackSend(socket, setClassColor))
+        if (user.yourTurn) {
+            if (classColor === "btnCirle") {
+                const data = { coordinate: props.position, idUser: user.idUser, idNicknameEnemy: user.idNicknameEnemy, yourTurn: user.yourTurn}
+                socket.emit("attack", data)
+                dispatch(thunks_.attackSend(socket, setClassColor))
+            }
         }
+
     }
-
- 
-
-
 
     return (<button
         onClick={() => { attackSend() }}

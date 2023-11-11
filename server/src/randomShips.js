@@ -397,12 +397,6 @@ function returnObject(name) {
 }
 
 
-function imprimirMatriz(matriz) {
-    for (let i = 0; i < matriz.length; i++) {
-        console.log(`${matriz[i]}`);
-    }
-}
-
 random_.getMatrix = () => {
     return matrixOriginal
 }

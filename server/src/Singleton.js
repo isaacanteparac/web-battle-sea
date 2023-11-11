@@ -27,7 +27,6 @@ export default class Singleton {
             };
             return true;
         } else {
-            console.log("ya existe usuario")
             return false;
         }
     }

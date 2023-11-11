@@ -6,8 +6,6 @@ const initialState = {
     showMyLayout: true,
     showEnemyLayout: false,
     textMyBoard: "Mi tablero",
-    yourTurn: false,
-
 }
 
 export const systemSlice = createSlice({
@@ -30,11 +28,8 @@ export const systemSlice = createSlice({
         setEnemyLayout: (state, action) => {
             state.showEnemyLayout = action.payload;
         },
-        setYourTurn: (state, action) => {
-            state.yourTurn = action.payload;
-        },
     }
 })
 
-export const { setShowTextWait, setYourTurn, setShowMyBoard, setTextMyBoard, setMyLayout, setEnemyLayout } = systemSlice.actions;
+export const { setShowTextWait, setShowMyBoard, setTextMyBoard, setMyLayout, setEnemyLayout } = systemSlice.actions;
 export default systemSlice.reducer;

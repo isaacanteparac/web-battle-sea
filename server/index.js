@@ -23,11 +23,6 @@ app.use(express.urlencoded({ limit: "15mb", extended: true }))
 const instance = new Singleton();
 
 io.on("connection", (socket) => {
-    console.log("usuario conectado")
-    socket.on("disconnect", () => {
-        console.log("usuario desconectado")
-    })
-
     socket.on("players avalibles", async () => {
         const playersData = instance.getPlayers()
         const filteredPlayers = Object.keys(playersData)
@@ -44,14 +39,11 @@ io.on("connection", (socket) => {
         const data = instance.getPlayers();
         const playerData = await data[nickname];
         if (playerData) {
-            console.log("socket data user ")
-            console.log(playerData)
             io.emit("data user", playerData);
         }
     })
 
     socket.on("attack", async (newAttack) => {
-        console.log(newAttack)
         const players = instance.getPlayers();
         const enemy = players[newAttack["idNicknameEnemy"]]
         const user = players[newAttack["idUser"]]
@@ -64,18 +56,16 @@ io.on("connection", (socket) => {
         const element = enemyBoard[row][column]["element"]
         if (element == Element.OCEAN || element == Element.BOMB) {
             user["color"] = "btnBlue"
-            user["yourTurn"] = false
-            enemy["yourTurn"] = true
+
         } else {
             enemyBoard[row][column]["element"] = Element.BOMB
             enemyBoard[row][column]["vital"] = VitalConditions.DEAD
-            enemy["yourTurn"] = true
             user["color"] = "btnRed"
-            user["yourTurn"] = false
-        }
 
+        }
+        user["yourTurn"] = false
+        enemy["yourTurn"] = true
         const newData = {
-            yourTurn: user["yourTurn"],
             color: user["color"],
             score: user["score"]
         }
@@ -88,10 +78,18 @@ io.on("connection", (socket) => {
             const playerData = await data[nickname];
             if (playerData) {
                 socket.emit("update_board", playerData["board"])
-
             }
         }
+    })
 
+    socket.on("update_turn", async (nickname) => {
+        const data = instance.getPlayers();
+        if (nickname != "") {
+            const playerData = await data[nickname];
+            if (playerData) {
+                socket.emit("update_turn", playerData["yourTurn"])
+            }
+        }
     })
 })
 
