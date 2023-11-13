@@ -7,15 +7,12 @@ import { setShowTextWait, setMyLayout, setEnemyLayout } from './redux/systemSlic
 import { thunks_ } from "./redux/thunks_";
 import { useEffect, useState } from "react";
 import Singleton from "./redux/Singleton";
-var count = 0
 
 function App() {
   const system = useSelector((state) => state.system);
   const user = useSelector((state) => state.user)
   const [listenAndEmit, setListenAndEmit] = useState(true)
   const dispatch = useDispatch()
-  /*TODO: CON RESPECTO AL SOCKECT HAY QUE CREAR UN PATRON DE DISEÑO SINGLETON, PARA ENVITAR 
-  ENVIAR EL SOCKECT POR MEDIO DE LOS PROPS, ESTO COMPLIA SU CONTROL YA QUE SE HEREDA DE COMPONENTE EN COMPONENTE */
   const singleton = new Singleton()
   const socket = singleton.getSocket()
 
@@ -47,7 +44,7 @@ function App() {
   return (
     <div className="App">
       {system.showMyLayout ? (<MyLayout/>) : null}
-      {system.showTextWait ? (<label className="textWait textblink">{"Buscado jugador...."}</label>) : null}
+      {system.showTextWait ? (<h2 className="textWait textblink">{"Buscado jugador...."}</h2>) : null}
       {system.showEnemyLayout ? (<EnemyLayout/>) : null}
     </div>
   );

@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
+model Users {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   inGame   Boolean
   idRoom   String
@@ -19,7 +19,7 @@ model users {
   board    Json
 }
 
-model rooms {
+model Rooms {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   player_1 String
@@ -27,7 +27,11 @@ model rooms {
   isActive Boolean
 }
 
-model sockect_name {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+model Historial {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  row             String
+  column          String
+  idUser          String
+  idNicknameEnemy String
+  idRoom          String
 }

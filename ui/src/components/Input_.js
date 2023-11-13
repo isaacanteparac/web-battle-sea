@@ -19,7 +19,7 @@ function Input_() {
   
 
     const createNewUser = () => {
-        dispatch(thunks_.createUserAndRoom(user))
+        dispatch(thunks_.createUserAndRoom(user, socket))
         if (!showOptions) {
             dispatch(restore());
         }
@@ -37,7 +37,7 @@ function Input_() {
 
 
     const createRoom = () => {
-        dispatch(thunks_.createUserAndRoom(user, true))
+        dispatch(thunks_.createUserAndRoom(user,socket, true))
         dispatch(restore());
     }
 

@@ -4,23 +4,26 @@ import { Server as SocketServer } from "socket.io";
 import { createServer } from "node:http";
 import cors from "cors";
 import Singleton from "./src/Singleton.js";
-
 import { routeData } from "./src/routeData.js";
 import VitalConditions from "./src/data/VitalConditions.js";
 import Element from "./src/data/Element.js";
+import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient()
 const port = 6060;
 const app = express();
 const server = createServer(app);
-
 const io = new SocketServer(server, { cors: { origin: "*", methods: ['GET', 'POST'] } });
+const instance = new Singleton();
+
+
 app.set("port", process.env.PORT || port);
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ limit: "15mb", extended: true }))
 
-const instance = new Singleton();
+
 
 io.on("connection", (socket) => {
     socket.on("players avalibles", async () => {
@@ -47,6 +50,8 @@ io.on("connection", (socket) => {
         const players = instance.getPlayers();
         const enemy = players[newAttack["idNicknameEnemy"]]
         const user = players[newAttack["idUser"]]
+
+        let emoji = ""
         if (enemy["score"] > 0) {
             enemy["score"] -= 10
         }
@@ -56,19 +61,37 @@ io.on("connection", (socket) => {
         const element = enemyBoard[row][column]["element"]
         if (element == Element.OCEAN || element == Element.BOMB) {
             user["color"] = "btnBlue"
+            emoji = "🌊"
 
         } else {
             enemyBoard[row][column]["element"] = Element.BOMB
             enemyBoard[row][column]["vital"] = VitalConditions.DEAD
             user["color"] = "btnRed"
-
+            emoji = "💀"
         }
         user["yourTurn"] = false
         enemy["yourTurn"] = true
         const newData = {
             color: user["color"],
-            score: user["score"]
+            score: user["score"],
+            emoji: emoji
         }
+
+        const d = {
+            row: row,
+            column: column,
+            idUser: newAttack["idUser"],
+            idNicknameEnemy: newAttack["idNicknameEnemy"],
+            idRoom: user["idRoom"]
+        }
+        console.log(d)
+        await prisma.Historial.create({
+            data: d
+        });
+
+
+
+
         socket.emit("attack", newData)
     })
 

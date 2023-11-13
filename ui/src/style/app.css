@@ -1,6 +1,6 @@
 body{
   background-color: var(--bg);
-  font-family: 'Aldrich', sans-serif;
+  font-family: 'Gugi', sans-serif;
 }
 
 .App {
@@ -21,6 +21,24 @@ body{
   margin-top: 10px;
   border-radius: var(--externalRoundedEdge);
   box-shadow: 5px 5px var(--borderColor);
+}
+
+.information{
+  background-color: #6c33f5;
+  width: 100%;
+  border-radius: var(--externalRoundedEdge);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.information label{
+    color: #FFFFFF;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: var(--fontSize);
+    text-decoration: underline;
+
 }
 
 

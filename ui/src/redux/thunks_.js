@@ -2,7 +2,7 @@ import { fetch_ } from "../util/fetch";
 import { updateUser, changeIdNicknameEnemy, changeIdRoom, changeInGame, changeBoard, changeScore, changeYourTurn } from "./userSlice";
 const thunks_ = {}
 
-thunks_.createUserAndRoom = (user, bool = false) => {
+thunks_.createUserAndRoom = (user, socket, bool = false) => {
     const urlCreateRoom = "create/room"
     const urlCreatePlayer = "create/player";
     return async (dispatch) => {
@@ -29,12 +29,13 @@ thunks_.searchRooms = (data, user) => {
     }
 }
 
-thunks_.attackSend = (socket, state) => {
+thunks_.attackSend = (socket, setColor,setText) => {
     return async (dispatch) => {
         socket.on("attack", async (data) => {
             await dispatch(changeYourTurn(data["yourTurn"]))
             await dispatch(changeScore(data["score"]))
-            await state(data["color"])
+            await setColor(data["color"])
+            await setText(data["emoji"])
         })
     }
 }
@@ -43,7 +44,6 @@ thunks_.updateBoard = (socket) => {
     return async (dispatch) => {
         socket.on("update_board", async (data) => {
             await dispatch(changeBoard(data))
-
         })
     }
 }
@@ -56,5 +56,15 @@ thunks_.updateTurn = (socket) => {
         })
     }
 }
+
+
+thunks_.emitBoardAndTurn = (socket, idUser) => {
+    return async (dispatch) => {
+        socket.emit("update_board", idUser);
+        socket.emit("update_turn", idUser);
+
+    }
+}
+
 
 export { thunks_ };

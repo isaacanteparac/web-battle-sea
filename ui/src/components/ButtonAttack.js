@@ -8,15 +8,16 @@ function ButtonAttack(props) {
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const [classColor, setClassColor] = useState("btnCirle")
+    const [text, setText] = useState(props.position)
     const singleton = new Singleton()
     const socket = singleton.getSocket()
 
     const attackSend = () => {
         if (user.yourTurn) {
             if (classColor === "btnCirle") {
-                const data = { coordinate: props.position, idUser: user.idUser, idNicknameEnemy: user.idNicknameEnemy, yourTurn: user.yourTurn}
+                const data = { coordinate: props.position, idUser: user.idUser, idNicknameEnemy: user.idNicknameEnemy, yourTurn: user.yourTurn, idRoom: user.idRoom }
                 socket.emit("attack", data)
-                dispatch(thunks_.attackSend(socket, setClassColor))
+                dispatch(thunks_.attackSend(socket, setClassColor, setText))
             }
         }
 
@@ -27,7 +28,7 @@ function ButtonAttack(props) {
         key={props.colIndex}
         className={classColor}
     >
-        <label className='textCircle'>{`${props.position}`}</label>
+        <label className='textCircle'>{`${text}`}</label>
     </button>);
 }
 

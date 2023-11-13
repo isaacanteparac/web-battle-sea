@@ -17,24 +17,23 @@ function MyLayout() {
         setboatSizeData(Object.values(data))
     }
 
-    useEffect(() => { loadboatSizeData()}, [])
+    useEffect(() => { loadboatSizeData() }, [])
 
     return (<div className='layout'>
         {system.showMyBoard ? (
             <div className='divColumn'>
                 <h2 className='title'>{system.textMyBoard}</h2>
-                <div className='boardContainer'>
-                    <Board json={user.board} button={false}/>
+                <div className='boardContainer layout_1'>
+                    <Board json={user.board} button={false} />
+                    <div className='containerShip_size'>
+                        {boatSizeData?.map((ship) => (
+                            <ShipSize key={ship.name} name={ship.displayName} nSize={ship.size} color={ship.color} amount={ship.amount} />
+                        ))}
+                    </div>
+
                 </div>
             </div>) : null}
-
-        <div className='startInformation'>
-            {!system.showMyBoard ? (<Input_ />) : null}
-            {system.showMyBoard ? (boatSizeData?.map((ship) => (
-                <ShipSize key={ship.name} name={ship.displayName} nSize={ship.size} color={ship.color} amount={ship.amount} />
-            ))) : null}
-        </div>
-
+        {!system.showMyBoard ? (<div className='startInformation'> <Input_ /></div>) : null}
     </div>);
 }
 

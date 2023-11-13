@@ -12,18 +12,27 @@ function EnemyLayout() {
     const singleton = new Singleton()
     const socket = singleton.getSocket()
 
-    dispatch(thunks_.updateBoard(socket))
-    dispatch(thunks_.updateTurn(socket))
-    useEffect(()=>{
-        socket.emit("update_board", user.idUser)
-        socket.emit("update_turn", user.idUser)
 
-    })
+    dispatch(thunks_.updateBoard(socket));
+    dispatch(thunks_.updateTurn(socket));
+
+
+    
+    useEffect(() => { dispatch(thunks_.emitBoardAndTurn(socket, user.idUser)) })
+
+
 
     return (<div className='layout'>
         <div className='divColumn'>
-            <h2 className='title'>{`${user.idUser} VS ${user.idNicknameEnemy}`}</h2>
-            {user.yourTurn ? (<h2 className='textWait textblink'>{`⌛ Tu Turno ⌛`}</h2>) : (<h2 className='textWait textblink'>{`⌛ Espera Ataque ⌛`}</h2>)}
+            <h2 className='title'>{`${user.idNicknameEnemy} VS ${user.idUser}`}</h2>
+
+            <div className='information'>
+                <h2 className='textWait'>{`Puntuacion: ${user.score}`}</h2>
+                <label>Más information</label>
+                {user.yourTurn ? (
+                    <h2 className='turnBox textblink'>{`🚨 Tu Turno 🚨`}</h2>) :
+                    (<h2 className='turnBox textblink'>{`🚨 Espera Ataque 🚨`}</h2>)}
+            </div>
             <div className='manyBoards'>
                 <div className='boardContainer'>
                     <label className='subTitle'>{"Enemigo"}</label>

@@ -10,9 +10,19 @@
 
 .title {
     color: var(--fontColor);
+    font-family: 'Aldrich', sans-serif;
+    background-color: #bcf533;
+    width: 100%;
+    padding-block: 20px;
+    justify-content: center;
+    border-bottom-left-radius: var(--externalRoundedEdge);
+    border-bottom-right-radius: var(--externalRoundedEdge);
+    color: #000000;
+    margin: 0;
+
 }
 
-.subTitle{
+.subTitle {
     color: var(--fontColor);
     text-transform: capitalize;
     font-size: 18px;
@@ -22,20 +32,35 @@
 
 .boardContainer {
     background-color: var(--boardContainerBg);
-    width: var(--boxboardContainerWidth);
-    padding: 5px;
+    padding: 10px;
     overflow: hidden;
-    border-radius: var(--internalRoundedEdge);
-    border: var(--outerBordersize) solid var(--borderColor);
-    box-shadow: 5px 5px var(--borderColor);
+    border-radius: var(--externalRoundedEdge);
 }
 
-  
+
 .divColumn {
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: .3125rem;
+}
+
+.layout_1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+
+.layout_1 .boxContainer {
+   width: var(--widthLayout_1Board);
+}
+
+.layout_1 .containerShip_size{
+    width: var(--widthLayout_1Board);
+ 
 }
 
 .manyBoards {
@@ -44,16 +69,25 @@
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+    border-radius: var(--externalRoundedEdge);
+    gap: 20px;
+
 }
 
+.manyBoards>div:first-child {
+    background-color: #f5335b;
+}
+
+.manyBoards>div {
+    flex: 1;
+}
 
 .textWait {
     color: var(--fontColorWait);
-    font-size: 20px;
 }
 
 .textblink {
-    animation: blink 1s infinite alternate;
+    animation: blink 1.4s infinite alternate;
 
 }
 
