@@ -18,8 +18,8 @@ function App() {
 
   useEffect(() => {
     if (listenAndEmit && user.idRoom === "") {
-      socket.emit("data user", user.idUser);
-      socket.on("data user", (data) => {
+      socket.emit("user_data", user.idUser);
+      socket.on("user_data", (data) => {
         if (system.showTextWait && data["inGame"]) {
           dispatch(thunks_.searchRooms(data, user))
           setTimeout(() => {
@@ -29,13 +29,13 @@ function App() {
             setListenAndEmit(false);
           }, 2000);
           return () => {
-            socket.off("data user");
+            socket.off("user_data");
           };
         }
       });
     } else {
       return () => {
-        socket.off("data user");
+        socket.off("user_data");
       };
     }
 
@@ -43,9 +43,9 @@ function App() {
 
   return (
     <div className="App">
-      {system.showMyLayout ? (<MyLayout/>) : null}
+      {system.showMyLayout ? (<MyLayout />) : null}
       {system.showTextWait ? (<h2 className="textWait textblink">{"Buscado jugador...."}</h2>) : null}
-      {system.showEnemyLayout ? (<EnemyLayout/>) : null}
+      {system.showEnemyLayout ? (<EnemyLayout />) : null}
     </div>
   );
 }

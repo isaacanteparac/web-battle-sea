@@ -2,26 +2,26 @@ import { fetch_ } from "../util/fetch";
 import { updateUser, changeIdNicknameEnemy, changeIdRoom, changeInGame, changeBoard, changeScore, changeYourTurn } from "./userSlice";
 const thunks_ = {}
 
-thunks_.createUserAndRoom = (user, socket, bool = false) => {
+thunks_.createUserAndRoom = (user, bool = false) => {
     const urlCreateRoom = "create/room"
     const urlCreatePlayer = "create/player";
     return async (dispatch) => {
         const data1 = await fetch_(urlCreatePlayer, { "nickname": user.nickname }, "POST");
         dispatch(updateUser(data1));
         if (bool) {
-            const data = await fetch_(urlCreateRoom, { join: data1["idUser"] }, "POST")
+            const data = await fetch_(urlCreateRoom, { join: data1["idUser"], create: user.idNicknameEnemy }, "POST")
             await dispatch(changeYourTurn(true))
             dispatch(changeIdRoom(data["idRoom"]));
-            dispatch(changeInGame(data["avalible"]));
+            dispatch(changeInGame(data["isActive"]));
         }
     };
 };
 
 thunks_.searchRooms = (data, user) => {
-    const urlRoomId = "room/"
+    const urlRoomId = "room/search/"
     return async (dispatch) => {
         const searchRoom = await fetch_(`${urlRoomId}${data["idRoom"]}`)
-        if (user.idUser === searchRoom["createdGame"]) {
+        if (user.idUser === searchRoom["joinGame"]) {
             await dispatch(changeIdNicknameEnemy(searchRoom["joinGame"]))
         } else {
             await dispatch(changeIdNicknameEnemy(searchRoom["createdGame"]))

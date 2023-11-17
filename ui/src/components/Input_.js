@@ -19,12 +19,11 @@ function Input_() {
   
 
     const createNewUser = () => {
-        dispatch(thunks_.createUserAndRoom(user, socket))
+        dispatch(thunks_.createUserAndRoom(user))
         if (!showOptions) {
             dispatch(restore());
         }
     }
-
 
     const restore = () => {
         return async (dispatch) => {
@@ -32,23 +31,21 @@ function Input_() {
             dispatch(setShowMyBoard(true))
             dispatch(setTextMyBoard(`Tablero de "${user.nickname}"`))
         }
-
     }
 
-
     const createRoom = () => {
-        dispatch(thunks_.createUserAndRoom(user,socket, true))
+        dispatch(thunks_.createUserAndRoom(user, true))
         dispatch(restore());
     }
 
     const loadPlayers = () => {
         if (!showOptions) {
-            socket.emit("players avalibles", "")
-            socket.on("players avalibles", (data) => {
-                if (data.length > 0) {
-                    dispatch(changeIdNicknameEnemy(data[0]["nickname"]))
+            socket.emit("available_players", "")
+            socket.on("available_players", (data) => {
+                if (data != null) {
+                    dispatch(changeIdNicknameEnemy(data["idUser"]))
                     setShowOptions(true)
-                    socket.off("players avalibles")
+                    socket.off("available_players")
                 }
             })
         }

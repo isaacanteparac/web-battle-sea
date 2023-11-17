@@ -19,7 +19,6 @@ export const userSlice = createSlice({
     reducers: {
         updateUser: (state, action) => {
             const { idUser,
-                nickname,
                 inGame,
                 idRoom,
                 board,
@@ -30,7 +29,6 @@ export const userSlice = createSlice({
             state.score = score;
             state.idNicknameEnemy = idNicknameEnemy;
             state.defaultBoard = defaultBoard;
-            state.nickname = nickname;
             state.inGame = inGame;
             state.idRoom = idRoom;
             state.board = board;
