@@ -1,17 +1,62 @@
-body{
+body {
   background-color: var(--bg);
   font-family: 'Gugi', sans-serif;
 }
 
+
+.wave {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #8e44ad 0%, #341f97 100%);
+}
+
+.wave::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #341f97 0%, #8e44ad 100%);
+  animation: moveWave 6s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+  transform: scaleY(0.9);
+}
+
+@keyframes moveWave {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+
+  50% {
+    transform: translateX(20%) translateY(-15px) scaleY(1.1);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+
+
 .App {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
   text-align: center;
+  z-index: 2;
+  /* Coloca el elemento encima de .wave */
+  background-color: transparent;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-.startInformation{
+.startInformation {
   background-color: var(--boxInformationBg);
   width: var(--initialBoxInformationWidth);
   height: var(--initialBoxInformationHeight);
@@ -23,7 +68,7 @@ body{
   box-shadow: 5px 5px var(--borderColor);
 }
 
-.information{
+.information {
   background-color: #6c33f5;
   width: 100%;
   border-radius: var(--externalRoundedEdge);
@@ -31,15 +76,58 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
+  padding-block: 15px;
 }
 
-.information label{
-    color: #FFFFFF;
-    font-family: 'Pixelify Sans', sans-serif;
-    font-size: var(--fontSize);
-    text-decoration: underline;
-
+.link {
+  color: #FFFFFF;
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: var(--fontSize);
+  text-decoration: underline;
+  margin: 0;
 }
+
+.information .textWait {
+  margin: 0;
+}
+
+.information .turnBox {
+  margin: 0;
+}
+
+.viewPlayers {
+  width: 98%;
+  margin: auto;
+  padding-block: 10px;
+  display: flex;
+  flex-wrap:wrap-reverse;
+}
+
+.viewPlayers .manyBoards .information .subTitle {
+  color: black;
+}
+
+.viewPlayers .manyBoards .information .circleTriangles {
+  background-color: black;
+}
+
+.viewPlayers .manyBoards .information .circleTriangles>label {
+  color: white;
+}
+
+.viewPlayers .manyBoards .boardContainer .information {
+  background: transparent;
+}
+
+.viewPlayers .manyBoards .boardContainer:nth-child(1) {
+  background-image: radial-gradient(circle at 50% -20.71%, #fff6ff 0, #ffedfc 12.5%, #ffe3f8 25%, #fdd8f5 37.5%, #f2cdf2 50%, #e6c3f0 62.5%, #d8baef 75%, #c8b3ef 87.5%, #b7adef 100%);
+}
+
+.viewPlayers .manyBoards .boardContainer:nth-child(2) {
+  background-image: radial-gradient(circle at 50% -20.71%, #fff6ff 0, #ffedfc 12.5%, #ffe3f8 25%, #fdd8f5 37.5%, #f2cdf2 50%, #e6c3f0 62.5%, #d8baef 75%, #c8b3ef 87.5%, #b7adef 100%);
+}
+
 
 
 
@@ -47,6 +135,7 @@ body{
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

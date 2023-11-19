@@ -4,7 +4,7 @@ const usersSchema = new mongoose.Schema({
   board: Object,
   defaultBoard: Object,
   idUser: String,
-  inGame: String,
+  inGame: Boolean,
   score: Number,
   yourTurn: Boolean,
   idRoom: String

@@ -50,7 +50,7 @@ routeData.post("/create/player", async (req, res) => {
                     score: 200,
                     defaultBoard: random_.getDefaultMatrix(),
                     yourTurn: false,
-                    idRoom:""
+                    idRoom: ""
                 });
                 await newUser.save();
                 repeat = false;
@@ -116,12 +116,14 @@ routeData.post("/create/room", async (req, res) => {
                 if (existingUser) {
                     const newRoom = new Rooms({ idRoom: nameRoom, createdGame: create, joinGame: join, isActive: true });
                     await newRoom.save();
-                    updateUser(join, { inGame: true, idRoom: nameRoom })
-                    updateUser(create, { inGame: true, idRoom: nameRoom, yourTurn: true })
+                    const updatedJoinUser = await updateUser(join, { inGame: true, idRoom: nameRoom });
+                    const updatedCreateUser = await updateUser(create, { inGame: true, idRoom: nameRoom, yourTurn: true });
                     repeat = false;
-                    const result = await Rooms.findOne({ idRoom: nameRoom })
-                    console.log(result)
-                    res.status(200).json(result);
+                    if (updatedJoinUser && updatedCreateUser) {
+                        res.status(200).json(newRoom);
+                    } else {
+                        res.status(400).json({ error: "Error al actualizar los usuarios" });
+                    }
                 } else {
                     repeat = false;
                     res.status(400).json({ error: "Jugadores no encontrados" });
@@ -129,19 +131,31 @@ routeData.post("/create/room", async (req, res) => {
             }
         }
     } catch (error) {
-        console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
 
 async function updateUser(id, data) {
-    return await Users.findOneAndUpdate(
+    try {
+      const usuarioActualizado = await Users.findOneAndUpdate(
         { idUser: id },
         { $set: data },
         { new: true }
-    ).exec();
-}
+      );
+      if (usuarioActualizado) {
+        console.log('Usuario actualizado');
+        return usuarioActualizado; // Devuelve el usuario actualizado
+      } else {
+        console.log('No se encontró ningún usuario con ese idUser.');
+        return null; // Devuelve null si no se encuentra el usuario
+      }
+    } catch (error) {
+      console.error('Error al actualizar el usuario:', error);
+      throw error; // Lanza el error para que sea manejado en el lugar donde se llama a updateUser
+    }
+  }
+  
 
 
 export { routeData };

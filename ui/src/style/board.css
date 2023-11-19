@@ -21,7 +21,6 @@
 .textCircle {
   text-transform: uppercase;
   font-size: var(--fontSize);
-  font-family: 'Pixelify Sans', sans-serif;
   color: var(--fontColorCircleBoard);
   font-weight: 600;
   user-select: none;
@@ -43,8 +42,7 @@
 }
 
 .btnCirle:active {
-  background-color: #f5f433;
-
+  background-color: rgb(255, 115, 0);
 }
 
 
@@ -70,8 +68,8 @@
 
 .btnBlue {
   border: none;
-  box-shadow: inset 0px 0px 0px 0px #00000056;
-  background-color: transparent;
+  box-shadow: inset 0px 0px 3px 3px #00000056;
+  background-color: #00a6ed25;
 }
 
 .boxContainer .btnCirle {

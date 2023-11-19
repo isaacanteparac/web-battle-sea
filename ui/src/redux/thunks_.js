@@ -9,10 +9,19 @@ thunks_.createUserAndRoom = (user, bool = false) => {
         const data1 = await fetch_(urlCreatePlayer, { "nickname": user.nickname }, "POST");
         dispatch(updateUser(data1));
         if (bool) {
-            const data = await fetch_(urlCreateRoom, { join: data1["idUser"], create: user.idNicknameEnemy }, "POST")
-            await dispatch(changeYourTurn(true))
-            dispatch(changeIdRoom(data["idRoom"]));
-            dispatch(changeInGame(data["isActive"]));
+            fetch_(urlCreateRoom, { join: data1["idUser"], create: user.idNicknameEnemy }, "POST")
+                .then(data => {
+                    dispatch(changeYourTurn(true));
+                    dispatch(changeIdRoom(data["idRoom"]));
+                    dispatch(changeInGame(data["isActive"]));
+                })
+                .catch(error => {
+                    console.error('Error al realizar la solicitud:', error);
+                });
+
+        }else{
+     
+            dispatch(changeIdRoom(data1["idRoom"]));
         }
     };
 };
@@ -20,16 +29,19 @@ thunks_.createUserAndRoom = (user, bool = false) => {
 thunks_.searchRooms = (data, user) => {
     const urlRoomId = "room/search/"
     return async (dispatch) => {
-        const searchRoom = await fetch_(`${urlRoomId}${data["idRoom"]}`)
-        if (user.idUser === searchRoom["joinGame"]) {
-            await dispatch(changeIdNicknameEnemy(searchRoom["joinGame"]))
-        } else {
-            await dispatch(changeIdNicknameEnemy(searchRoom["createdGame"]))
+        if (data["idRoom"]) {
+            const searchRoom = await fetch_(`${urlRoomId}${data["idRoom"]}`)
+            if (user.idUser === searchRoom["createdGame"]) {
+                await dispatch(changeIdNicknameEnemy(searchRoom["joinGame"]))
+            } else {
+                await dispatch(changeIdNicknameEnemy(searchRoom["createdGame"]))
+            }
         }
+
     }
 }
 
-thunks_.attackSend = (socket, setColor,setText) => {
+thunks_.attackSend = (socket, setColor, setText) => {
     return async (dispatch) => {
         socket.on("attack", async (data) => {
             await dispatch(changeYourTurn(data["yourTurn"]))

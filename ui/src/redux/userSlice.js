@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     idUser: "",
     nickname: "",
-    inGame: null,
+    inGame: "",
     idRoom: null,
     board: null,
     score: 0,
@@ -20,17 +20,13 @@ export const userSlice = createSlice({
         updateUser: (state, action) => {
             const { idUser,
                 inGame,
-                idRoom,
                 board,
                 score,
-                idNicknameEnemy,
                 defaultBoard } = action.payload;
             state.idUser = idUser;
             state.score = score;
-            state.idNicknameEnemy = idNicknameEnemy;
             state.defaultBoard = defaultBoard;
             state.inGame = inGame;
-            state.idRoom = idRoom;
             state.board = board;
         },
         changeIdUser: (state, action) => {

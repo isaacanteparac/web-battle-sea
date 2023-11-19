@@ -39,7 +39,6 @@ function Board(props) {
             {rows.map((row) => (
                 Object.values(row || {}).map((column, colIndex) => (
                     buttonOrDiv(colIndex, column.element, column.type, column.position)
-
                 ))
             ))}
         </div>

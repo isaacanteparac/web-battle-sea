@@ -17,7 +17,7 @@ function EnemyLayout() {
     dispatch(thunks_.updateTurn(socket));
 
 
-    
+
     useEffect(() => { dispatch(thunks_.emitBoardAndTurn(socket, user.idUser)) })
 
 
@@ -25,10 +25,8 @@ function EnemyLayout() {
     return (<div className='layout'>
         <div className='divColumn'>
             <h2 className='title'>{`${user.idNicknameEnemy} VS ${user.idUser}`}</h2>
-
             <div className='information'>
-                <h2 className='textWait'>{`Puntuacion: ${user.score}`}</h2>
-                <label>Más information</label>
+                <div className='circleTriangles'><label>{`${user.score}Pts`}</label></div>
                 {user.yourTurn ? (
                     <h2 className='turnBox textblink'>{`🚨 Tu Turno 🚨`}</h2>) :
                     (<h2 className='turnBox textblink'>{`🚨 Espera Ataque 🚨`}</h2>)}

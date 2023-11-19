@@ -5,6 +5,7 @@ import Users from "./database/models/Users.js";
 
 export function setupSocket(server) {
     const io = new SocketServer(server, { cors: { origin: "*", methods: ['GET', 'POST'] } });
+    let Id
 
     io.on("connection", (socket) => {
         console.log("connect")
@@ -48,6 +49,26 @@ export function setupSocket(server) {
                 }
             }
         })
+
+        socket.on("see_players", async (room) => {
+            try {
+                if (room.isActive) {
+                    const get = { idUser: 1,board: 1, score: 1, yourTurn: 1, inGame: 1, _id: 0 };
+                    const createdGame = await Users.findOne({ idUser: room.createdGame }, get);
+                    const joinGame = await Users.findOne({ idUser: room.joinGame }, get);
+                    const players = {
+                        createdGame,
+                        joinGame
+                    };
+                    socket.emit("see_players", players);
+                } else {
+                    console.log("Room is not active or invalid data.");
+                }
+            } catch (error) {
+                console.error("Error occurred:", error);
+            }
+        });
+        
     })
 
 }

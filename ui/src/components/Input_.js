@@ -16,7 +16,7 @@ function Input_() {
     const dispatch = useDispatch()
     const singleton = new Singleton()
     const socket = singleton.getSocket()
-  
+
 
     const createNewUser = () => {
         dispatch(thunks_.createUserAndRoom(user))
