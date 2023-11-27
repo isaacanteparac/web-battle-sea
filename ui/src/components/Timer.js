@@ -15,7 +15,7 @@ function Timer() {
     const waitTime = 4
 
     useEffect(() => {
-        if (user.winner === "") {
+        if (!showWinner) {
             let intervalo;
             if (user.yourTurn) {
                 setText("Tu turno ")
@@ -39,14 +39,16 @@ function Timer() {
             return () => {
                 clearInterval(intervalo);
             };
+        }
+        if (user.winner === user.idUser) {
+            setText("🏆¡Felicitaciones, has ganado!🏆");
+            setWinner(true)
         } else {
-            if (user.winner === user.idUser) {
-                setText("🏆 ¡Felicitaciones, has ganado!🏆");
-            } else {
-                setText("💩 ¡Felicitaciones manc@, has perdido!💩");
-            }
+            setText("💩¡Felicitaciones manc@, has perdido!💩");
             setWinner(true)
         }
+
+
 
     }, [user.yourTurn, user.idUser, seconds, socket, user, dispatch]);
 

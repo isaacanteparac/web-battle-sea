@@ -14,12 +14,12 @@ function App() {
     <div className="App">
       {showBtn ? (<div className="menu">
         <button onClick={() => { setShowBtn(false); setComponent(<SeePlayers />) }}>
-          Ver jugadores
+          Ver jugadores 👀
         </button>
         <button onClick={() => {
           setShowBtn(false); setComponent(<Player />)
         }}>
-          Jugar
+          Jugar 🕹️
         </button>
       </div>) : null
 

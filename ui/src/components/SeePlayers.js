@@ -23,7 +23,6 @@ function SeePlayers() {
         setShowListRooms(false);
         setNameRoom(room.idRoom)
     };
-    //                        style={{ backgroundColor: 'white' }}
 
     return (
         <div className="watchGameBox">
