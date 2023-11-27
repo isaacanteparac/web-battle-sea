@@ -114,7 +114,7 @@ routeData.post("/create/room", async (req, res) => {
             if (!existingRoom) {
                 const existingUser = await Users.findOne({ idUser: join });
                 if (existingUser) {
-                    const newRoom = new Rooms({ idRoom: nameRoom, createdGame: create, joinGame: join, isActive: true });
+                    const newRoom = new Rooms({ idRoom: nameRoom, createdGame: create, joinGame: join, isActive: true, winner: "" });
                     await newRoom.save();
                     const updatedJoinUser = await updateUser(join, { inGame: true, idRoom: nameRoom });
                     const updatedCreateUser = await updateUser(create, { inGame: true, idRoom: nameRoom, yourTurn: true });

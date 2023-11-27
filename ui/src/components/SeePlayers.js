@@ -6,6 +6,7 @@ function SeePlayers() {
     const [listRooms, setListRooms] = useState([]);
     const [showlistRooms, setShowListRooms] = useState(true);
     const [selectedRoom, setSelectedRoom] = useState(null);
+    const [nameRoom, setNameRoom] = useState("Rooms")
 
     const getAllRooms = async () => {
         const url = "all/rooms";
@@ -20,25 +21,40 @@ function SeePlayers() {
     const handleRoomClick = (room) => {
         setSelectedRoom(room);
         setShowListRooms(false);
+        setNameRoom(room.idRoom)
     };
+    //                        style={{ backgroundColor: 'white' }}
 
     return (
-        <div>
+        <div className="watchGameBox">
+            <h1>{nameRoom}</h1>
             {showlistRooms ? (
+
                 listRooms.map((room) => (
                     <button
+                        className={room.isActive ? "watchGameButtonYes" : "watchGameButtonYes watchGameButtonNo"}
                         key={room.idRoom}
-                        style={{ backgroundColor: 'white' }}
                         onClick={() => handleRoomClick(room)}
                     >
-                        <p>Room Name: {room.idRoom}</p>
-                        <p>Player 1: {room.createdGame}</p>
-                        <p>Player 2: {room.joinGame}</p>
+                        <ul>
+                            <li><label>Nombre:</label> {room.idRoom}</li>
+                            <li><label>Player 1:</label> {room.createdGame}</li>
+                            <li><label>Player 2:</label> {room.joinGame}</li>
+                            <li><label>Online:</label> {room.isActive ? "Si" : "No"}</li>
+                            <li>
+                                <label>Ganador:</label>
+                                {room.winner === null || room.winner.trim() === "" ? "Ninguno" : room.winner}
+                            </li>
+                        </ul>
+
+
                     </button>
                 ))
-            ) : null}
+            )
+
+                : null}
             {!showlistRooms && selectedRoom && (
-                <PlayersBoard room={selectedRoom}/>
+                <PlayersBoard room={selectedRoom} />
             )}
         </div>
     );

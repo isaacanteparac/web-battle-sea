@@ -2,6 +2,7 @@ import Element from './data/Element.js';
 import VitalConditions from './data/VitalConditions.js';
 import Users from './database/models/Users.js';
 import Historial from './database/models/Historial.js';
+import Rooms from './database/models/Rooms.js';
 
 
 const ctrlSocket = {
@@ -17,8 +18,8 @@ ctrlSocket.receiverAttack = async (newAttack) => {
     const updateEnemyData = {}
     updateEnemyData["row"] = newAttack["coordinate"].slice(0, 2);
     updateEnemyData["column"] = newAttack["coordinate"].slice(2);
-    updateEnemyData["yourTurn"] = true
     const element = enemy["board"][updateEnemyData["row"]][updateEnemyData["column"]]["element"]
+
     if (element == Element.OCEAN || element == Element.BOMB) {
         updateEnemyData["element"] = Element.OCEAN
         updateEnemyData["vital"] = VitalConditions.ALIVE
@@ -35,6 +36,20 @@ ctrlSocket.receiverAttack = async (newAttack) => {
         }
     }
 
+    if(updateEnemyData["score"] === 0){
+        console.log("0 es la puntuacion del enemigo")
+        await Rooms.findOneAndUpdate(
+            { idRoom: newAttack["idRoom"] },
+            {
+                $set: {
+                    Winner: newAttack["idUser"],
+                    isActive: false
+                }
+            },
+            { new: true }
+        )
+    }
+
 
     const newHistorial = new Historial({
         row: newAttack["row"],
@@ -46,24 +61,11 @@ ctrlSocket.receiverAttack = async (newAttack) => {
     });
     newHistorial.save()
 
-    const newData = {
-        color: properties["color"],
-        score: user["score"],
-        emoji: properties["emoji"],
-    }
-
-    await Users.findOneAndUpdate(
-        { idUser: newAttack["idUser"] },
-        { $set: { yourTurn: false, } },
-        { new: true }
-    );
-
     await Users.findOneAndUpdate(
         { idUser: newAttack["idNicknameEnemy"] },
         {
             $set: {
                 score: updateEnemyData["score"],
-                yourTurn: updateEnemyData["yourTurn"],
                 [`board.${updateEnemyData["row"]}.${updateEnemyData["column"]}.element`]: updateEnemyData["element"],
                 [`board.${updateEnemyData["row"]}.${updateEnemyData["column"]}.vital`]: updateEnemyData["vital"]
             }
@@ -71,8 +73,10 @@ ctrlSocket.receiverAttack = async (newAttack) => {
         { new: true }
     );
 
-    console.log(newAttack["idUser"])
-    console.log(newData)
+    const newData = {
+        color: properties["color"],
+        emoji: properties["emoji"],
+    }
 
     return newData
 }

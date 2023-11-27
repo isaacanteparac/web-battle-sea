@@ -1,5 +1,5 @@
 import { fetch_ } from "../util/fetch";
-import { updateUser, changeIdNicknameEnemy, changeIdRoom, changeInGame, changeBoard, changeScore, changeYourTurn } from "./userSlice";
+import { updateUser, changeIdNicknameEnemy, changeIdRoom, changeInGame, changeBoard, changeScore, changeYourTurn, changeWinner } from "./userSlice";
 const thunks_ = {}
 
 thunks_.createUserAndRoom = (user, bool = false) => {
@@ -19,8 +19,8 @@ thunks_.createUserAndRoom = (user, bool = false) => {
                     console.error('Error al realizar la solicitud:', error);
                 });
 
-        }else{
-     
+        } else {
+
             dispatch(changeIdRoom(data1["idRoom"]));
         }
     };
@@ -44,39 +44,31 @@ thunks_.searchRooms = (data, user) => {
 thunks_.attackSend = (socket, setColor, setText) => {
     return async (dispatch) => {
         socket.on("attack", async (data) => {
-            await dispatch(changeYourTurn(data["yourTurn"]))
-            await dispatch(changeScore(data["score"]))
             await setColor(data["color"])
             await setText(data["emoji"])
         })
     }
 }
 
-thunks_.updateBoard = (socket) => {
+thunks_.getUpdateData = (socket) => {
     return async (dispatch) => {
-        socket.on("update_board", async (data) => {
-            await dispatch(changeBoard(data))
-        })
-    }
-}
-
-thunks_.updateTurn = (socket) => {
-    return async (dispatch) => {
-        socket.on("update_turn", async (data) => {
-            await dispatch(changeYourTurn(data))
-
-        })
+            socket.on("update_data", async (data) => {
+                await dispatch(changeBoard(data["board"]))
+                await dispatch(changeYourTurn(data["yourTurn"]))
+                await dispatch(changeWinner(data["winner"]))
+                await dispatch(changeScore(data["score"]))
+            })
     }
 }
 
 
-thunks_.emitBoardAndTurn = (socket, idUser) => {
-    return async (dispatch) => {
-        socket.emit("update_board", idUser);
-        socket.emit("update_turn", idUser);
 
+thunks_.updateTurn = (socket, user) => {
+    return async (dispatch) => {
+        socket.emit("sleep_timer", { idUser: user.idUser, idNicknameEnemy: user.idNicknameEnemy, yourTurn: user.yourTurn });
     }
 }
+
 
 
 export { thunks_ };

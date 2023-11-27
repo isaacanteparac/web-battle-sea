@@ -4,6 +4,23 @@ body {
 }
 
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  border-radius: 50px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #0745ff;
+}
+
 .wave {
   position: fixed;
   top: 0;
@@ -99,34 +116,33 @@ body {
 .viewPlayers {
   width: 98%;
   margin: auto;
-  padding-block: 10px;
+  margin-top: 0px;
+  padding-bottom: 5px;
   display: flex;
-  flex-wrap:wrap-reverse;
+  flex-wrap: wrap-reverse;
 }
 
 .viewPlayers .manyBoards .information .subTitle {
-  color: black;
+  color: #bcf533;
 }
 
 .viewPlayers .manyBoards .information .circleTriangles {
-  background-color: black;
+  background-color: #131212;
 }
 
 .viewPlayers .manyBoards .information .circleTriangles>label {
-  color: white;
+  color: #bcf533;
 }
 
 .viewPlayers .manyBoards .boardContainer .information {
   background: transparent;
 }
 
-.viewPlayers .manyBoards .boardContainer:nth-child(1) {
-  background-image: radial-gradient(circle at 50% -20.71%, #fff6ff 0, #ffedfc 12.5%, #ffe3f8 25%, #fdd8f5 37.5%, #f2cdf2 50%, #e6c3f0 62.5%, #d8baef 75%, #c8b3ef 87.5%, #b7adef 100%);
+.viewPlayers .manyBoards .boardContainer {
+  background-color: #000;
+  border: 3px solid #bcf533;
 }
 
-.viewPlayers .manyBoards .boardContainer:nth-child(2) {
-  background-image: radial-gradient(circle at 50% -20.71%, #fff6ff 0, #ffedfc 12.5%, #ffe3f8 25%, #fdd8f5 37.5%, #f2cdf2 50%, #e6c3f0 62.5%, #d8baef 75%, #c8b3ef 87.5%, #b7adef 100%);
-}
 
 
 

@@ -8,11 +8,13 @@ import EnemyLayout from "./EnemyLayout.js"
 
 import { thunks_ } from "../redux/thunks_";
 import Singleton from "../redux/Singleton";
+import { changeIdRoom } from "../redux/userSlice.js";
 
 function Player() {
     const system = useSelector((state) => state.system);
     const user = useSelector((state) => state.user)
     const [listenAndEmit, setListenAndEmit] = useState(true)
+    const [component, setComponent] = useState(<MyLayout />)
     const dispatch = useDispatch()
     const singleton = new Singleton()
     const socket = singleton.getSocket()
@@ -23,13 +25,13 @@ function Player() {
             socket.emit("user_data", user.idUser);
             socket.on("user_data", (data) => {
                 if (system.showTextWait && data["inGame"]) {
+                    dispatch(changeIdRoom(data["idRoom"]))
                     dispatch(thunks_.searchRooms(data, user))
                     setTimeout(() => {
                         dispatch(setShowTextWait(false));
                         dispatch(setMyLayout(false));
                         dispatch(setEnemyLayout(true));
-
-
+                        setComponent(<EnemyLayout />)
                     }, 2000);
                     setListenAndEmit(false);
                     return () => {
@@ -47,10 +49,8 @@ function Player() {
 
     return (
         <>
-
-            {system.showMyLayout ? (<MyLayout />) : null}
+            {component}
             {system.showTextWait ? (<h2 className="textWait textblink">{"Buscado jugador...."}</h2>) : null}
-            {system.showEnemyLayout ? (<EnemyLayout />) : null}
         </>
     );
 }

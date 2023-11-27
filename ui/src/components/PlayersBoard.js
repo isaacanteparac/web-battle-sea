@@ -6,35 +6,38 @@ function PlayersBoard(props) {
     const room = props.room;
     const [player_1, setPlayer_1] = useState({});
     const [player_2, setPlayer_2] = useState({});
-    const [showBoards, setShowBoards] = useState(true)
-    const [winnerUser, setWinnerUser] = useState("")
+    const [showBoards, setShowBoards] = useState(true);
+    const [winnerUser, setWinnerUser] = useState("");
     const singleton = new Singleton();
     const socket = singleton.getSocket();
+    const  [init, setInit] = useState(false);
 
     socket.on("see_players", (data) => {
         setPlayer_1(data["createdGame"]);
         setPlayer_2(data["joinGame"]);
-        /*if (!player_1.inGame || player_1.score === 0) {
-            winner(player_2.idUser)
-        } else if (!player_2.inGame || player_2.score === 0) {
-            winner(player_1.idUser)
-        }else {
-            socket.emit("see_players", room);
-        }*/
     });
 
     const winner = (user) => {
-        setShowBoards(false)
-        setWinnerUser(user)
-    }
+        setShowBoards(false);
+        setWinnerUser(user);
+    };
 
     useEffect(() => {
-        socket.emit("see_players", room);
-    },);
+        if (!init) {
+            const interval = setInterval(() => {
+                socket.emit("see_players", room);
+            }, 4000);
+
+            return () => clearInterval(interval);
+        }
+        /*else {
+            socket.emit("see_players", room);
+            setInit(false)
+        }*/
+    }, [socket, room]);
 
     return (
         <div className="divColumn viewPlayers">
-            <label className="subTitle">{room.idRoom}</label>
             {showBoards ? (
                 <div className='manyBoards'>
                     <div className='boardContainer'>
@@ -53,8 +56,9 @@ function PlayersBoard(props) {
                     </div>
                 </div>
 
-            ) : null}
-            {!showBoards ? (<h1>{`El Ganador es ${winnerUser}`}</h1>) : null}
+            ) : (
+                <h1>{`El Ganador es ${winnerUser}`}</h1>
+            )}
         </div>
     );
 }

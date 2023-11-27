@@ -73,7 +73,7 @@
     }
 
     .layout {
-        padding-inline: 10px;
+        padding-inline: 5px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;

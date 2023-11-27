@@ -113,6 +113,72 @@
 }
 
 
+.watchGameBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.watchGameBox>h1 {
+    color: white;
+}
+
+.watchGameButtonYes {
+    border-radius: var(--internalRoundedEdge);
+    border: 3px solid #bcf533;
+    background-color: #000000;
+    padding: 15px;
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 30px;
+    width: 55%;
+
+}
+
+.watchGameButtonNo{
+    border: 3px solid #f5335b;
+
+}
+
+.watchGameButtonYes:hover {
+    transform: translate(0px, -10px);
+
+}
+
+.watchGameButtonNo:hover {
+    transform: translate(0px, 0px);
+}
+
+.watchGameButtonYes>ul {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    display: flex;
+}
+
+
+.watchGameButtonYes>ul>li {
+    list-style: none;
+    color: white;
+    margin-inline: 5px;
+    font-family: 'Aldrich', sans-serif;
+
+}
+
+.watchGameButtonYes>ul>li>label {
+    color: #bcf533;
+    margin-right: 5px;
+    font-family: 'Aldrich', sans-serif;
+}
+
+
+.watchGameButtonNo>ul>li>label {
+    color: #f5335b;
+    margin-right: 5px;
+    font-family: 'Aldrich', sans-serif;
+}
+
+
+
 
 @keyframes blink {
     from {

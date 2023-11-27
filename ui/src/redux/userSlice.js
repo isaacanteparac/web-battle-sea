@@ -10,7 +10,8 @@ const initialState = {
     score: 0,
     idNicknameEnemy: "",
     defaultBoard: null,
-    yourTurn: false
+    yourTurn: false,
+    winner: null,
 }
 
 export const userSlice = createSlice({
@@ -56,9 +57,11 @@ export const userSlice = createSlice({
         changeYourTurn: (state, action) => {
             state.yourTurn = action.payload;
         },
-   
+        changeWinner:    (state, action) => {
+            state.winner = action.payload;
+        }
     }
 })
 
-export const { updateUser, changeYourTurn, changeIdUser, changeIdRoom, changeBoard, changeInGame, changeNickname, changeIdNicknameEnemy, changeDefaultBoard, changeScore } = userSlice.actions;
+export const { updateUser, changeYourTurn, changeWinner, changeIdUser, changeIdRoom, changeBoard, changeInGame, changeNickname, changeIdNicknameEnemy, changeDefaultBoard, changeScore } = userSlice.actions;
 export default userSlice.reducer;

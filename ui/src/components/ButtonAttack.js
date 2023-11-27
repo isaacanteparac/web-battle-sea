@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { thunks_ } from '../redux/thunks_';
 import Singleton from '../redux/Singleton';
+import { changeYourTurn } from '../redux/userSlice';
+
 
 function ButtonAttack(props) {
     const user = useSelector((state) => state.user)
@@ -12,11 +14,13 @@ function ButtonAttack(props) {
     const singleton = new Singleton()
     const socket = singleton.getSocket()
 
+
     const attackSend = () => {
         if (user.yourTurn) {
             if (classColor === "btnCirle") {
-                const data = { coordinate: props.position, idUser: user.idUser, idNicknameEnemy: user.idNicknameEnemy, yourTurn: user.yourTurn, idRoom: user.idRoom }
+                const data = { coordinate: props.position, idUser: user.idUser, idNicknameEnemy: user.idNicknameEnemy, idRoom: user.idRoom }
                 socket.emit("attack", data)
+                dispatch(changeYourTurn(false))
                 dispatch(thunks_.attackSend(socket, setClassColor, setText))
             }
         }
