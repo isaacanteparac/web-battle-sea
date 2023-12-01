@@ -1,26 +1,18 @@
-# web-battle-sea
-- reactjs
-- redux
-- moongose
 ## Instalacion
-1. Abrir la terminal e ingresar a la carpeta
-2. Ingresar a las sub directorio server y ui
-3. En cada uno de los directorios ejecutar npm i install(se instalara todos los modulos)
-4. Activar server
-    - Una vez debtro del directorio de server ejecutar npm run dev
-5. Activar ui
-    - Una vez debtro del directorio de server ejecutar npm start
-6. implementacion de db muy pronto...
+1. Abrir la terminal e ingresar a los directorios ui y server
+2. En cada uno de los directorios ejecutar npm i install(se instalara todos los modulos)
+3. La activacion de los servidores deberan tener este orden: 
+    1. Directorio server
+        - Escribir en la terminal el siguiente comando: npm run dev
+    2. Directorio ui
+        - Escribir en la terminal el siguiente comando: npm start
 
-![room](https://github.com/isaacanteparac/web-battle-sea/assets/69361351/db0415f4-6405-4ea3-8ef1-5c6bec43f9b2)
-![roompd](https://github.com/isaacanteparac/web-battle-sea/assets/69361351/357abadc-b600-4b74-8bd4-b809d2c91081)
-![Screenshot_20231118-230836_Pixel Launcher](https://github.com/isaacanteparac/web-battle-sea/assets/69361351/f42db2c3-338f-42ee-a183-99e7162045b7)
+## Screenshot de espectador
+| Seleccion de room | Espectar room |
+| -------- | -------- |
+| ![image](https://github.com/isaacanteparac/web-battle-sea/assets/69361351/a2d74860-c437-405e-86ba-fa8ad2423e64) | ![image](https://github.com/isaacanteparac/web-battle-sea/assets/69361351/1eb74ff8-dcf4-46c9-ac1e-c67ec61df6bd) |
 
-
-# Ui
-- bloquear los click de botones cuando haya un ganador
-- corregir el bug de los emojis de agua y calavera
-    - al hacer click en uno de esos todos los emojis se hacen de ese emoji que envio el server
-# back
-- cuando ya haya un ganador los atributos de los dos jugadores inGame y turn =  false
-- 
+## Screenshot de jugador
+| Espera jugador | Empieza el juego |
+| -------- | -------- |
+| ![image](https://github.com/isaacanteparac/web-battle-sea/assets/69361351/b2591375-d04a-4fb8-9b28-6b5cfee36543) | ![image](https://github.com/isaacanteparac/web-battle-sea/assets/69361351/08d210a3-59ea-49ab-99c9-585cdcf203d1) |
