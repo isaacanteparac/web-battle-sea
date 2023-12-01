@@ -1,5 +1,5 @@
 import express from "express";
-import Ship from "./data/Ship.js";
+import Ship from "./Object/Ship.js";
 import { random_ } from "./randomShips.js";
 import Users from "./database/models/Users.js";
 import Rooms from "./database/models/Rooms.js"

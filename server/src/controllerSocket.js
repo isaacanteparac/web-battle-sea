@@ -1,5 +1,5 @@
-import Element from './data/Element.js';
-import VitalConditions from './data/VitalConditions.js';
+import Element from './Object/Element.js';
+import VitalConditions from './Object/VitalConditions.js';
 import Users from './database/models/Users.js';
 import Historial from './database/models/Historial.js';
 import Rooms from './database/models/Rooms.js';

@@ -163,6 +163,11 @@ body {
 }
 
 
+.menu > button:hover {
+
+  color: #bcf533;
+  text-decoration: underline;
+}
 
 
 

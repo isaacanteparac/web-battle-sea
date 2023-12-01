@@ -1,7 +1,7 @@
-import Element from "./data/Element.js";
-import { Row, Column } from "./data/Position.js";
-import Ship from "./data/Ship.js";
-import VitalConditions from "./data/VitalConditions.js";
+import Element from "./Object/Element.js";
+import { Row, Column } from "./Object/Position.js";
+import Ship from "./Object/Ship.js";
+import VitalConditions from "./Object/VitalConditions.js";
 
 const random_ = {
 

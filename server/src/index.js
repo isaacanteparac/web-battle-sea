@@ -5,7 +5,6 @@ import {routeData} from "./routerHandler.js";
 import cors from "cors";
 import { setupSocket } from "./socketHandler.js";
 import db from "./database/db.js";
-import mongoose from "mongoose";
 const port = 6060;
 const app = express();
 const server = createServer(app);
@@ -17,13 +16,9 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ limit: "15mb", extended: true }))
 
-
 db()
 
-
 setupSocket(server)
-
-
 
 app.use("/data", routeData);
 

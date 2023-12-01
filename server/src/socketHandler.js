@@ -8,7 +8,6 @@ export function setupSocket(server) {
     const io = new SocketServer(server, { cors: { origin: "*", methods: ['GET', 'POST'] } });
 
     io.on("connection", (socket) => {
-        console.log("connect")
 
         socket.on("close", () => {
             console.log('Cliente desconectado');
