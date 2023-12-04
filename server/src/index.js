@@ -23,4 +23,4 @@ setupSocket(server)
 app.use("/data", routeData);
 
 server.listen(app.get("port"));
-console.log("SERVER PORT " + app.get("port"));
+console.log("SERVER PORT http://localhost:" + app.get("port")+"/data");

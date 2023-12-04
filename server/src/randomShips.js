@@ -10,7 +10,7 @@ const random_ = {
 var matrixToPredict = [];
 var matrixOriginal = {}
 
-random_.run = () => {
+random_.run = (userBoard = { automatic: true, data: {} }) => {
     matrixToPredict = [[0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -329,11 +329,11 @@ random_.run = () => {
             }
         },
     };
-    placeShipsInMatrix(matrixToPredict, Ship);
+    placeShipsInMatrix(matrixToPredict, Ship, userBoard);
 }
 
 
-function placeShipsInMatrix(matrix, ships) {
+function placeShipsInMatrix(matrix, ships, userBoard) {
     const shipsArray = Object.values(ships);
     for (const ship of shipsArray) {
         for (let i = 0; i < ship.amount; i++) {
@@ -342,15 +342,22 @@ function placeShipsInMatrix(matrix, ships) {
                 const randomRow = Math.floor(Math.random() * matrix.length);
                 const randomColumn = Math.floor(Math.random() * matrix[0].length);
                 const randomOrientation = Math.random() < 0.5 ? 'horizontal' : 'vertical';
-                placed = placeShip(matrix, randomRow, randomColumn, randomOrientation, ship);
+                placed = (userBoard.automatic) ?
+                    placeAutomaticShip(matrix, randomRow, randomColumn, randomOrientation, ship)
+                    : console.log(ship);//placeManualShip(matrix, userBoard.data[big][i]);
             }
         }
     }
 }
 
+function placeManualShip(matrix, data, ship) {
+    console.log(data)
+    return placeAutomaticShip(matrix, data.row, data.Column, data.orientation, ship)
+}
 
 
-function placeShip(matrix, startRow, startColumn, orientation, ship) {
+
+function placeAutomaticShip(matrix, startRow, startColumn, orientation, ship) {
     if (orientation === 'horizontal' && startColumn + ship.size <= matrix[0].length) {
         for (let i = 0; i < ship.size; i++) {
             if (matrix[startRow][startColumn + i] !== 0) {

@@ -3,6 +3,7 @@ import Ship from "./Object/Ship.js";
 import { random_ } from "./randomShips.js";
 import Users from "./database/models/Users.js";
 import Rooms from "./database/models/Rooms.js"
+import { Column, Row } from "./Object/Position.js";
 const routeData = express.Router();
 
 function noSpace(text) {
@@ -12,6 +13,35 @@ function noSpace(text) {
 /*NOTE: DATA DEFAULT */
 routeData.get("/ship", (req, res) => {
     res.json(Ship);
+});
+
+routeData.get("/rows", (req, res) => {
+    res.json(Row);
+});
+
+routeData.get("/columns", (req, res) => {
+    res.json(Column);
+});
+
+routeData.post("/create/ships", async (req, res) => {
+    const { generate } = req.body;
+    if(generate){
+        const {mini, small, big, gigant} = req.body
+        
+    console.log("mini")
+    console.log(mini)
+    console.log("small")
+    console.log(small)
+    console.log("big")
+    console.log(big)
+    console.log("gigant")
+    console.log(gigant)
+
+    }else{
+        console.log("automatic generate")
+
+    }
+
 });
 
 routeData.get("/player/:userId", async (req, res) => {
@@ -64,7 +94,6 @@ routeData.post("/create/player", async (req, res) => {
     }
 });
 
-
 routeData.get("/all/players", async (req, res) => {
     try {
         const users = await Users.find({}).exec();
@@ -74,7 +103,6 @@ routeData.get("/all/players", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-
 
 /*NOTE: ROOMS */
 routeData.get("/room/search/:roomId", async (req, res) => {
