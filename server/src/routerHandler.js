@@ -23,25 +23,28 @@ routeData.get("/columns", (req, res) => {
     res.json(Column);
 });
 
-routeData.post("/create/ships", async (req, res) => {
-    const { generate } = req.body;
-    if(generate){
-        const {mini, small, big, gigant} = req.body
-        
-    console.log("mini")
-    console.log(mini)
-    console.log("small")
-    console.log(small)
-    console.log("big")
-    console.log(big)
-    console.log("gigant")
-    console.log(gigant)
+routeData.post("/create/board", async (req, res) => {
+    const data = req.body;
+    var board = {};
 
-    }else{
-        console.log("automatic generate")
+    console.log(data)
+    if (data.automatic) {
+        random_.run(data)
+        board = random_.getMatrix()
+        console.log("generar manualmente")
+    } else {
+        random_.run()
+        board = random_.getMatrix()
+        console.log("generar autoticamente")
 
     }
-
+    await Users.findOneAndUpdate(
+        { idUser: data.idUser },
+        { $set: { board } },
+        { new: true }
+    );
+    console.log(board)
+    res.send(board)
 });
 
 routeData.get("/player/:userId", async (req, res) => {
@@ -75,7 +78,7 @@ routeData.post("/create/player", async (req, res) => {
                 random_.run()
                 const newUser = new Users({
                     idUser: idUser,
-                    board: random_.getMatrix(),
+                    board: {},
                     inGame: false,
                     score: 200,
                     defaultBoard: random_.getDefaultMatrix(),
@@ -166,24 +169,24 @@ routeData.post("/create/room", async (req, res) => {
 
 async function updateUser(id, data) {
     try {
-      const usuarioActualizado = await Users.findOneAndUpdate(
-        { idUser: id },
-        { $set: data },
-        { new: true }
-      );
-      if (usuarioActualizado) {
-        console.log('Usuario actualizado');
-        return usuarioActualizado; // Devuelve el usuario actualizado
-      } else {
-        console.log('No se encontró ningún usuario con ese idUser.');
-        return null; // Devuelve null si no se encuentra el usuario
-      }
+        const usuarioActualizado = await Users.findOneAndUpdate(
+            { idUser: id },
+            { $set: data },
+            { new: true }
+        );
+        if (usuarioActualizado) {
+            console.log('Usuario actualizado');
+            return usuarioActualizado; // Devuelve el usuario actualizado
+        } else {
+            console.log('No se encontró ningún usuario con ese idUser.');
+            return null; // Devuelve null si no se encuentra el usuario
+        }
     } catch (error) {
-      console.error('Error al actualizar el usuario:', error);
-      throw error; // Lanza el error para que sea manejado en el lugar donde se llama a updateUser
+        console.error('Error al actualizar el usuario:', error);
+        throw error; // Lanza el error para que sea manejado en el lugar donde se llama a updateUser
     }
-  }
-  
+}
+
 
 
 export { routeData };

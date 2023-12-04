@@ -26,6 +26,15 @@ thunks_.createUserAndRoom = (user, bool = false) => {
     };
 };
 
+thunks_.boardGenerate = (data) => {
+    const urlCreateBoard= "create/board"
+    return async (dispatch) => {
+        const result = await fetch_(urlCreateBoard, data, "POST");
+        dispatch(changeBoard(result));
+        console.log(result)
+    };
+};
+
 thunks_.searchRooms = (data, user) => {
     const urlRoomId = "room/search/"
     return async (dispatch) => {
@@ -60,6 +69,9 @@ thunks_.getUpdateData = (socket) => {
             })
     }
 }
+
+
+
 
 
 
