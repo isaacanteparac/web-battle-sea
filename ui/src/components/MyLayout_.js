@@ -21,8 +21,14 @@ function MyLayout() {
     const [automatic, setAutomatic] = useState(false);
     const [getManualChoice, setManualChoice] = useState(false);
     const [positions, setPositions] = useState([]);
-    const [totalClicks, setTotalClicks] = useState(0);
-    const [countClicks, setCountClicks] = useState(1);
+    const [totalClicks, setTotalClicks] = useState();
+    const [countClicks, setCountClicks] = useState({
+        "mini": 0,
+        "small": 0,
+        "big": 0,
+        "gigant": 0,
+        "total": 0
+    });
 
     const urlRow = "rows";
     const urlColumns = "columns";
@@ -35,22 +41,46 @@ function MyLayout() {
         setBoatSizeData(Object.values(sdata));
         setRowData(Object.values(rdata));
         setColumnData(Object.values(cdata));
-        setTotalClicks(sdata.big.amount + sdata.small.amount + sdata.mini.amount + sdata.gigant.amount);
+        setTotalClicks({
+            "mini": sdata.mini.amount,
+            "small": sdata.small.amount,
+            "big": sdata.big.amount,
+            "gigant": sdata.gigant.amount,
+            "total": sdata.big.amount + sdata.small.amount + sdata.mini.amount + sdata.gigant.amount
+        });
     };
 
     const manualSend = async () => {
-        setCountClicks(countClicks+1);
         if (!automatic) {
-            console.log("click "+countClicks)
-            console.log("total de clicl "+totalClicks)
-            if (countClicks !== totalClicks) {
-                positions.push({
-                    ship: shipSelection,
-                    row: rowSelection,
-                    column: columnSelection,
-                    orientation: orientationSelection,
-                });
-                setPositions([...positions]);
+            console.log("click ")
+            console.log(countClicks)
+            console.log("total de clicl " + totalClicks.total)
+            if (countClicks !== totalClicks.total) {
+                let nameShip = ""+shipSelection
+                countClicks[nameShip] +=1
+                if(countClicks[nameShip] <= totalClicks[nameShip]){
+                    const positionExists = positions.some(
+                        (item) => item.row === rowSelection && item.column === columnSelection
+                    );
+    
+                    if (!positionExists) {
+                        positions.push({
+                            ship: shipSelection,
+                            row: rowSelection,
+                            column: columnSelection,
+                            orientation: orientationSelection,
+                        });
+                        countClicks.total += 1;
+                        setPositions([...positions]);
+
+                    } else {
+                        console.log("¡La posición ya está seleccionada!");
+                        countClicks[nameShip] -=1
+                    }
+                }else{
+                    document.getElementById(nameShip).style.display = "none";
+                }
+               
             } else {
                 save();
             }
@@ -87,7 +117,7 @@ function MyLayout() {
                                         </button>
                                     </div>
                                 ) : (
-                                    <>
+
                                     <div className=''>
                                         <label className='subTitle'>Selección Manual</label>
                                         <div>
@@ -95,7 +125,7 @@ function MyLayout() {
                                             <select name="shipSize" onChange={(e) => setShipSelection(e.target.value)}>
                                                 <option disabled selected value="">Seleccione</option>
                                                 {boatSizeData.map((value, index) => (
-                                                    <option key={index} value={value.name}>{value.displayName}</option>
+                                                    <option key={index} value={value.name} id={value.name}>{value.displayName}</option>
                                                 ))}
                                             </select>
                                         </div>
@@ -130,29 +160,28 @@ function MyLayout() {
                                         </div>
 
                                         <button onClick={() => manualSend()}>Guardar</button>
+
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Tamaño</th>
+                                                    <th>Fl</th>
+                                                    <th>Clm</th>
+                                                    <th>Pstn</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {positions.map((item, index) => (
+                                                    <tr key={index}>
+                                                        <td>{item.ship}</td>
+                                                        <td>{item.row}</td>
+                                                        <td>{item.column}</td>
+                                                        <td>{item.orientation}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
                                     </div>
-                                 <div>
-                                 <table>
-                                     <thead>
-                                         <tr>
-                                             <th>Tamaño</th>
-                                             <th>Fl</th>
-                                             <th>Clm</th>
-                                             <th>Pstn</th>
-                                         </tr>
-                                     </thead>
-                                     <tbody>
-                                         {positions.map((item, index) => (
-                                             <tr key={index}>
-                                                 <td>{item.ship}</td>
-                                                 <td>{item.row}</td>
-                                                 <td>{item.column}</td>
-                                                 <td>{item.orientation}</td>
-                                             </tr>
-                                         ))}
-                                     </tbody>
-                                 </table>
-                             </div></>
                                 )}
                             </div>
                         </div>
