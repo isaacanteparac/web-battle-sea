@@ -76,10 +76,8 @@
 }
 
 .turnBox {
-  background-color: #F6e10d;
+  background-color: #00ffd5;
   padding-block: 10px;
   padding-inline: 5px;
-  border-radius: 20px;
   font-size: 18px;
-  border-radius: var(--internalRoundedEdge);
 }

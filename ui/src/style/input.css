@@ -45,9 +45,9 @@
     color: #ffffff;
 }
 
-.inputBox .send:active {
+.send:active {
 
-    background-color: #ae4c68;
+    background-color: #000000;
 }
 
 .keep {

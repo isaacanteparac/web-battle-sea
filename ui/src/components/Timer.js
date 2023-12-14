@@ -19,7 +19,7 @@ function Timer() {
             let intervalo;
             if (user.yourTurn) {
                 setText("Tu turno ")
-                setBg("#F6E10D")
+                setBg("#96f60d")
             } else {
                 setText("Turno de enemigo ")
                 setBg("#f60d96")
@@ -54,7 +54,7 @@ function Timer() {
 
     return (
         <>
-            {!showWinner ? (<h2 className='turnBox' style={{ background: bg }}>{`🚨 ${text} ${seconds}s/${waitTime}s 🚨`}</h2>) : <h2 className='turnBox' style={{ background: bg }}>{text}</h2>}
+            {!showWinner ? (<label style={{ background: bg, padding:"5px", color:"black"}}>{`${text} ${seconds}s/${waitTime}s`}</label>) : <label style={{ background: bg, color:"black" }}>{text}</label>}
         </>
     );
 };

@@ -25,8 +25,8 @@ function EnemyLayout() {
         <div className='divColumn'>
             <h2 className='title'>{`${user.idNicknameEnemy} VS ${user.idUser}`}</h2>
             <div className='information'>
-                <div className='circleTriangles'><label>{`${user.score}Pts`}</label></div>
-                <Timer/>
+                <div className='circleTriangles'><label>{`${user.score}Pts`}</label><Timer/></div>
+                
             </div>
             <div className='manyBoards'>
                 <div className='boardContainer'>

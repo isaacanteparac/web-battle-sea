@@ -29,7 +29,7 @@ routeData.post("/create/board", async (req, res) => {
 
     console.log(data)
     if (data.automatic) {
-        random_.run(data)
+        random_.run(data.positions)
         board = random_.getMatrix()
         console.log("generar manualmente")
     } else {

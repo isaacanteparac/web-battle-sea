@@ -1,5 +1,5 @@
 :root {
-    --bg: #131212;
+    --bg: #5f3cf0;
     --externalRoundedEdge: 1.875rem;
     --internalRoundedEdge: 1.25rem;
     --outerBordersize: .1875rem;
@@ -80,11 +80,11 @@
         gap: 0px;
 
         .manyBoards {
-            width: 100%;
+            width: 90%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 20px;
             background-color: transparent;
             padding: 0;
 
