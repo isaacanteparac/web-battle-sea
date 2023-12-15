@@ -56,13 +56,13 @@ function MyLayout() {
             console.log(countClicks)
             console.log("total de clicl " + totalClicks.total)
             if (countClicks !== totalClicks.total) {
-                let nameShip = ""+shipSelection
-                countClicks[nameShip] +=1
-                if(countClicks[nameShip] <= totalClicks[nameShip]){
+                let nameShip = "" + shipSelection
+                countClicks[nameShip] += 1
+                if (countClicks[nameShip] <= totalClicks[nameShip]) {
                     const positionExists = positions.some(
                         (item) => item.row === rowSelection && item.column === columnSelection
                     );
-    
+
                     if (!positionExists) {
                         positions.push({
                             ship: shipSelection,
@@ -75,12 +75,12 @@ function MyLayout() {
 
                     } else {
                         console.log("¡La posición ya está seleccionada!");
-                        countClicks[nameShip] -=1
+                        countClicks[nameShip] -= 1
                     }
-                }else{
+                } else {
                     document.getElementById(nameShip).style.display = "none";
                 }
-               
+
             } else {
                 save();
             }
@@ -92,7 +92,9 @@ function MyLayout() {
         dispatch(thunks_.boardGenerate(data));
     };
 
-    useEffect(() => { loadRCData(); }, []);
+    useEffect(() => {
+        loadRCData();
+    }, []);
 
     return (
         <div className='layout'>

@@ -35,14 +35,14 @@ function PlayersBoard(props) {
                 <div className='boardContainer'>
                     <div className='information'>
                         <label className='subTitle'>{player_1.idUser ? player_1.idUser : 'Player 1'}</label>
-                        <div className='circleTriangles' style={{background:"#5f3cf0"}}><label>{`${player_1.score}Pts`}</label></div>
+                        <div style={{color:"#5f3cf0"}}><label>{`${player_1.score}Pts`}</label></div>
                     </div>
                     <Board json={player_1.board} button={false} />
                 </div>
                 <div className='boardContainer boardContainer2'>
                     <div className='information'>
                         <label className='subTitle'>{player_2.idUser ? player_2.idUser : 'Player 2'}</label>
-                        <div className='circleTriangles' style={{background:"#5f3cf0"}}><label>{`${player_2.score}Pts`}</label></div>
+                        <div style={{color:"#5f3cf0"}}><label>{`${player_2.score}Pts`}</label></div>
                     </div>
                     <Board json={player_2.board} button={false} />
                 </div>

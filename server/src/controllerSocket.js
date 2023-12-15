@@ -37,12 +37,12 @@ ctrlSocket.receiverAttack = async (newAttack) => {
     }
 
     if(updateEnemyData["score"] === 0){
-        console.log("0 es la puntuacion del enemigo")
+        console.log("0 es la puntuacion del enemigo"+enemy["isUser"])
         await Rooms.findOneAndUpdate(
             { idRoom: newAttack["idRoom"] },
             {
                 $set: {
-                    Winner: newAttack["idUser"],
+                    winner: newAttack["idUser"],
                     isActive: false
                 }
             },

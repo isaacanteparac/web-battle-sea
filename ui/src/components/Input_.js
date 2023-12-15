@@ -54,7 +54,7 @@ function Input_() {
     return (<div className='separator'>
         <label className='subTitle'>Registrate</label>
         <div className='inputBox'>
-            <input placeholder="nickname" id='inputCreated' type='text' value={user.nickname} onClick={() => loadPlayers()} onChange={(e) => dispatch(changeNickname(e.target.value))} />
+            <input placeholder="nickname" autoComplete='off' id='inputCreated' type='text' value={user.nickname} onClick={() => loadPlayers()} onChange={(e) => dispatch(changeNickname(e.target.value))} />
             {!showOptions ? (<button className="send" id='btnCreated' onClick={() => createNewUser("inputCreated")}>{">"}</button>) : null}
         </div>
         {showOptions ? (<>

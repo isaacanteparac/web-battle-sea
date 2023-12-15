@@ -23,18 +23,21 @@ function EnemyLayout() {
 
     return (<div className='layout'>
         <div className='divColumn'>
-            <h2 className='title'>{`${user.idNicknameEnemy} VS ${user.idUser}`}</h2>
             <div className='information'>
-                <div className='circleTriangles'><label>{`${user.score}Pts`}</label><Timer/></div>
+                <div className='circleTriangles'>
+                    <label className='title'>{`${user.idNicknameEnemy} VS ${user.idUser}`}</label>
+                    <label className='points'>{`${user.score}Pts`}</label>
+                    <Timer/>
+                </div>
                 
             </div>
             <div className='manyBoards'>
                 <div className='boardContainer'>
-                    <label className='subTitle'>{"Enemigo"}</label>
+                    <label className='subTitle'>{"Enemigo: "+user.idNicknameEnemy}</label>
                     <Board json={user.defaultBoard} button={true} />
                 </div>
                 <div className='boardContainer boardContainer2'>
-                    <label className='subTitle'>{"Yo"}</label>
+                    <label className='subTitle'>{"Yo:   "+user.idUser}</label>
                     <Board json={user.board} button={false} />
                 </div>
             </div>

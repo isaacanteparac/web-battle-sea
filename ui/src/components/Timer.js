@@ -19,7 +19,7 @@ function Timer() {
             let intervalo;
             if (user.yourTurn) {
                 setText("Tu turno ")
-                setBg("#96f60d")
+                setBg("#fff")
             } else {
                 setText("Turno de enemigo ")
                 setBg("#f60d96")
@@ -35,26 +35,30 @@ function Timer() {
                 dispatch(thunks_.getUpdateData(socket));
                 socket.emit("update_data", { idUser: user.idUser, idRoom: user.idRoom });
             }
+            if (user.winner === "") {
+                return () => clearInterval(intervalo);
 
-            return () => {
+            } else {
                 clearInterval(intervalo);
-            };
+            }
         }
-        if (user.winner === user.idUser) {
-            setText("🏆¡Felicitaciones, has ganado!🏆");
-            setWinner(true)
-        } else {
-            setText("💩¡Felicitaciones manc@, has perdido!💩");
-            setWinner(true)
+        if (user.winner !== null) {
+            console.log("etsoy en la seccion de ganaodres")
+            if (user.winner === user.idUser) {
+                console.log(user.winner)
+                setText("🏆¡Felicitaciones, has ganado!🏆");
+                setWinner(true)
+            } else {
+                setText("💩¡Felicitaciones campeon, has perdido!💩");
+                setWinner(true)
+            }
         }
-
-
-
     }, [user.yourTurn, user.idUser, seconds, socket, user, dispatch]);
 
     return (
         <>
-            {!showWinner ? (<label style={{ background: bg, padding:"5px", color:"black"}}>{`${text} ${seconds}s/${waitTime}s`}</label>) : <label style={{ background: bg, color:"black" }}>{text}</label>}
+            {!showWinner ? (<label className='yourTurn' style={{ color: bg }}>{`${text} ${seconds}s/${waitTime}s`}</label>)
+                : <label className='yourTurn winner'>{text}</label>}
         </>
     );
 };

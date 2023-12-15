@@ -11,14 +11,13 @@
 .title {
     color: var(--fontColor);
     font-family: 'Aldrich', sans-serif;
-    background-color: #bcf533;
     width: 100%;
-    padding-block: 20px;
     justify-content: center;
     border-bottom-left-radius: var(--externalRoundedEdge);
     border-bottom-right-radius: var(--externalRoundedEdge);
-    color: #000000;
-    margin: 0;
+    color: #fff;
+    font-weight: bolder;
+    margin: 0px;
 }
 
 .subTitle {
@@ -100,17 +99,44 @@
     justify-content: center;
     flex-direction: column;
     overflow: hidden;
+    border-radius: var(--externalRoundedEdge);
     border: var(--outerBordersize) solid var(--borderColor);
     box-shadow: 5px 5px var(--borderColor);
-    background-color: #2c2b2b;
-    width: 335px;
-    gap: 15px;
-    padding: 5px;
+    background-color: #ffda37;
+    min-width: 329px;
+    gap: 10px;
+    padding-top: 10px;
 }
 
 .circleTriangles>label {
+    font-size: 18px;
+}
+
+.points {
+    background-color: #593a00;
+    width: auto;
+    margin: auto;
+    margin-block: 0;
+    padding: 10px;
+    border-radius: var(--internalRoundedEdge);
     color: #fff;
-    font-size: 20px;
+}
+
+.yourTurn {
+    width: 100%;
+    padding-block: 10px;
+    background-color: #dab513;
+    border-top: var(--outerBordersize) dashed #593a00;
+    font-weight: 600;
+}
+
+.information .title {
+    color: #593a00;
+}
+
+.winner {
+    color: #ffda37;
+    background-color: #593a00;
 }
 
 
@@ -135,7 +161,7 @@
 
 }
 
-.watchGameButtonNo{
+.watchGameButtonNo {
     border: 3px solid #f5335b;
 
 }

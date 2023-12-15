@@ -31,7 +31,6 @@ thunks_.boardGenerate = (data) => {
     return async (dispatch) => {
         const result = await fetch_(urlCreateBoard, data, "POST");
         dispatch(changeBoard(result));
-        console.log(result)
     };
 };
 
