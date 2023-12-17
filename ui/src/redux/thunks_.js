@@ -18,9 +18,7 @@ thunks_.createUserAndRoom = (user, bool = false) => {
                 .catch(error => {
                     console.error('Error al realizar la solicitud:', error);
                 });
-
         } else {
-
             dispatch(changeIdRoom(data1["idRoom"]));
         }
     };

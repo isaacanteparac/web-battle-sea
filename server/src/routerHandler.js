@@ -26,10 +26,8 @@ routeData.get("/columns", (req, res) => {
 routeData.post("/create/board", async (req, res) => {
     const data = req.body;
     var board = {};
-
-    console.log(data)
-    if (data.automatic) {
-        random_.run(data.positions)
+    if (!data.automatic) {
+        random_.run(data)
         board = random_.getMatrix()
         console.log("generar manualmente")
     } else {
@@ -38,12 +36,16 @@ routeData.post("/create/board", async (req, res) => {
         console.log("generar autoticamente")
 
     }
-    await Users.findOneAndUpdate(
-        { idUser: data.idUser },
-        { $set: { board } },
-        { new: true }
-    );
-    console.log(board)
+    console.log("Board")
+    console.log(data.clicks)
+    if (data.clicks === 10) {
+        await Users.findOneAndUpdate(
+            { idUser: data.idUser },
+            { $set: { board: board, isActive: true } },
+            { new: true }
+        );
+    }
+
     res.send(board)
 });
 
@@ -78,8 +80,9 @@ routeData.post("/create/player", async (req, res) => {
                 random_.run()
                 const newUser = new Users({
                     idUser: idUser,
-                    board: {},
+                    board: random_.getDefaultMatrix(),
                     inGame: false,
+                    isActive: false,
                     score: 200,
                     defaultBoard: random_.getDefaultMatrix(),
                     yourTurn: false,
@@ -167,6 +170,42 @@ routeData.post("/create/room", async (req, res) => {
 });
 
 
+routeData.get("/sign-out", async (req, res) => {
+    const { idUser, idRoom } = req.query;
+    if (idUser !== undefined && idRoom !== null) {
+        const room = await Rooms.findOne({ idRoom })
+        if (room && room.winner === "") {
+            if (idUser === room.createdGame) {
+                await Rooms.findOneAndUpdate(
+                    { idRoom },
+                    {
+                        $set: {
+                            winner: room.joinGame,
+                            isActive: false
+                        }
+                    },
+                    { new: true }
+                )
+            }else{
+                await Rooms.findOneAndUpdate(
+                    { idRoom },
+                    {
+                        $set: {
+                            winner: room.createdGame,
+                            isActive: false
+                        }
+                    },
+                    { new: true }
+                )
+            }
+            updateUser(room.createdGame, {isActive: false})
+            updateUser(room.joinGame, {isActive: false})
+
+        }
+    }
+})
+
+
 async function updateUser(id, data) {
     try {
         const usuarioActualizado = await Users.findOneAndUpdate(
@@ -175,17 +214,17 @@ async function updateUser(id, data) {
             { new: true }
         );
         if (usuarioActualizado) {
-            console.log('Usuario actualizado');
-            return usuarioActualizado; // Devuelve el usuario actualizado
+            return usuarioActualizado;
         } else {
-            console.log('No se encontró ningún usuario con ese idUser.');
-            return null; // Devuelve null si no se encuentra el usuario
+            return null;
         }
     } catch (error) {
         console.error('Error al actualizar el usuario:', error);
-        throw error; // Lanza el error para que sea manejado en el lugar donde se llama a updateUser
+        throw error;
     }
 }
+
+
 
 
 

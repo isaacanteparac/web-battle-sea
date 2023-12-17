@@ -37,7 +37,6 @@ function Timer() {
             }
             if (user.winner === "") {
                 return () => clearInterval(intervalo);
-
             } else {
                 clearInterval(intervalo);
             }

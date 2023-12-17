@@ -14,7 +14,7 @@ export function setupSocket(server) {
         });
 
         socket.on("available_players", async () => {
-            const data = await Users.findOne({ inGame: false });
+            const data = await Users.findOne({ isActive: true });
             io.emit("available_players", data);
         })
 
@@ -22,7 +22,13 @@ export function setupSocket(server) {
         socket.on("user_data", async (userId) => {
             const data = await Users.findOne({ idUser: userId });
             if (data) {
-                io.emit("user_data", data);
+                if(data.idRoom !== ""){
+                    const room = await Rooms.findOne({ idRoom: data.idRoom });
+                    const player2 = await Users.findOne({idUser: room.joinGame})
+                    if(player2.isActive){
+                        io.emit("user_data", data);
+                    }
+                }
             }
         })
 

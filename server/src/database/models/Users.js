@@ -5,6 +5,7 @@ const usersSchema = new mongoose.Schema({
   defaultBoard: Object,
   idUser: String,
   inGame: Boolean,
+  isActive: Boolean,
   score: Number,
   yourTurn: Boolean,
   idRoom: String

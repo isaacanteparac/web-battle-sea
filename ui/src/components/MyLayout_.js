@@ -55,10 +55,10 @@ function MyLayout() {
             console.log("click ")
             console.log(countClicks)
             console.log("total de clicl " + totalClicks.total)
-            if (countClicks !== totalClicks.total) {
+            if (countClicks.total !== totalClicks.total) {
                 let nameShip = "" + shipSelection
-                countClicks[nameShip] += 1
-                if (countClicks[nameShip] <= totalClicks[nameShip]) {
+                if (countClicks[nameShip] <= totalClicks[nameShip] - 1) {
+                    countClicks[nameShip] += 1
                     const positionExists = positions.some(
                         (item) => item.row === rowSelection && item.column === columnSelection
                     );
@@ -80,15 +80,13 @@ function MyLayout() {
                 } else {
                     document.getElementById(nameShip).style.display = "none";
                 }
-
-            } else {
-                save();
+                save()
             }
         }
     };
 
     const save = () => {
-        const data = { automatic, positions, idUser: user.idUser };
+        const data = { automatic, positions, idUser: user.idUser, clicks: countClicks.total };
         dispatch(thunks_.boardGenerate(data));
     };
 
@@ -111,7 +109,10 @@ function MyLayout() {
                                 {!getManualChoice ? (
                                     <div>
                                         <h3>Tipo de generacion: </h3>
-                                        <button onClick={() => { setAutomatic(true); save(); }}>
+                                        <button onClick={() => {
+                                            setAutomatic(true); countClicks.total = 10;
+                                            save();
+                                        }}>
                                             Automatico
                                         </button>
                                         <button onClick={() => { setAutomatic(false); setManualChoice(true); }}>
@@ -119,7 +120,6 @@ function MyLayout() {
                                         </button>
                                     </div>
                                 ) : (
-
                                     <div className=''>
                                         <label className='subTitle'>Selección Manual</label>
                                         <div>
