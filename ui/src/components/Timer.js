@@ -42,9 +42,7 @@ function Timer() {
             }
         }
         if (user.winner !== null) {
-            console.log("etsoy en la seccion de ganaodres")
             if (user.winner === user.idUser) {
-                console.log(user.winner)
                 setText("🏆¡Felicitaciones, has ganado!🏆");
                 setWinner(true)
             } else {

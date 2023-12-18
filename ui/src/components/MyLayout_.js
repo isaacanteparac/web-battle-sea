@@ -52,38 +52,50 @@ function MyLayout() {
 
     const manualSend = async () => {
         if (!automatic) {
-            console.log("click ")
-            console.log(countClicks)
-            console.log("total de clicl " + totalClicks.total)
             if (countClicks.total !== totalClicks.total) {
                 let nameShip = "" + shipSelection
-                if (countClicks[nameShip] <= totalClicks[nameShip] - 1) {
-                    countClicks[nameShip] += 1
-                    const positionExists = positions.some(
-                        (item) => item.row === rowSelection && item.column === columnSelection
-                    );
+                if (shipSelection !== '' && rowSelection !== '' && columnSelection !== '' && orientationSelection !== '') {
 
-                    if (!positionExists) {
-                        positions.push({
-                            ship: shipSelection,
-                            row: rowSelection,
-                            column: columnSelection,
-                            orientation: orientationSelection,
-                        });
-                        countClicks.total += 1;
-                        setPositions([...positions]);
+                    if (countClicks[nameShip] <= totalClicks[nameShip] - 1) {
+                        countClicks[nameShip] += 1
+                        const positionExists = positions.some(
+                            (item) => item.row === rowSelection && item.column === columnSelection
+                        );
 
+                        if (!positionExists) {
+                            positions.push({
+                                ship: shipSelection,
+                                row: rowSelection,
+                                column: columnSelection,
+                                orientation: orientationSelection,
+                            });
+                            countClicks.total += 1;
+                            setPositions([...positions]);
+                        } else {
+                            countClicks[nameShip] -= 1
+                        }
                     } else {
-                        console.log("¡La posición ya está seleccionada!");
-                        countClicks[nameShip] -= 1
+                        document.getElementById(nameShip).style.display = "none";
                     }
-                } else {
-                    document.getElementById(nameShip).style.display = "none";
+                    save()
                 }
-                save()
             }
         }
     };
+
+    const delete_ = (id, size) => {
+        console.log(id)
+        console.log("total")
+        console.log(countClicks.total)
+        if (countClicks.total !== 0) {
+            const updatedPositions = positions.filter((_, idx) => idx !== id);
+            setPositions(updatedPositions);
+            countClicks[size] -= 1
+            countClicks.total -= 1;
+            save()
+        }
+
+    }
 
     const save = () => {
         const data = { automatic, positions, idUser: user.idUser, clicks: countClicks.total };
@@ -107,78 +119,88 @@ function MyLayout() {
                             ))}
                             <div>
                                 {!getManualChoice ? (
-                                    <div>
-                                        <h3>Tipo de generacion: </h3>
-                                        <button onClick={() => {
-                                            setAutomatic(true); countClicks.total = 10;
-                                            save();
-                                        }}>
-                                            Automatico
-                                        </button>
-                                        <button onClick={() => { setAutomatic(false); setManualChoice(true); }}>
-                                            Manual
-                                        </button>
+                                    <div className='typeGeneration'>
+                                        <h3 style={{ color: "#fff" }}>Tipo de generacion: </h3>
+                                        <div>
+                                            <button className='typeGenerationBtn' onClick={() => {
+                                                setAutomatic(true);
+                                                countClicks.total = 10;
+                                                save();
+                                            }}>
+                                                Automatico
+                                            </button>
+                                            <button className='typeGenerationBtn' onClick={() => { setAutomatic(false); setManualChoice(true); }}>
+                                                Manual
+                                            </button>
+                                        </div>
+                                        <label style={{ fontSize: "15px", textAlign: "left", marginBlock: "10px", color: "#fff" }}>🟨Opt Automatico hacer click x2 para confirmar, en 1seg.</label>
+                                        <label style={{ fontSize: "15px", textAlign: "left", color: "#fff" }}>🟥Opt manual en beta.</label>
                                     </div>
                                 ) : (
-                                    <div className=''>
-                                        <label className='subTitle'>Selección Manual</label>
-                                        <div>
-                                            <label>Tamaño del Barco</label>
-                                            <select name="shipSize" onChange={(e) => setShipSelection(e.target.value)}>
-                                                <option disabled selected value="">Seleccione</option>
-                                                {boatSizeData.map((value, index) => (
-                                                    <option key={index} value={value.name} id={value.name}>{value.displayName}</option>
-                                                ))}
-                                            </select>
+                                    <div className='manual'>
+                                        <div className='manualComponent'>
+                                            <label style={{ color: "#3376FA", fontSize: "19px" }}>Selección Manual</label>
+
+                                            <div className='optionalBox'>
+                                                <label>Tamaño</label>
+                                                <select name="shipSize" onChange={(e) => setShipSelection(e.target.value)}>
+                                                    <option disabled selected value="">Seleccione</option>
+                                                    {boatSizeData.map((value, index) => (
+                                                        <option key={index} value={value.name} id={value.name}>{value.displayName}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+
+                                            <div className='optionalBox'>
+                                                <label>Fila</label>
+                                                <select name="rowData" onChange={(e) => setRowSelection(e.target.value)}>
+                                                    <option disabled selected value="">Seleccione</option>
+                                                    {rowData.map((value, index) => (
+                                                        <option key={index} value={value}>{value}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+
+                                            <div className='optionalBox'>
+                                                <label>Columna</label>
+                                                <select name="columnData" onChange={(e) => setColumnSelection(e.target.value)}>
+                                                    <option disabled selected value="">Seleccione</option>
+                                                    {columnData.map((value, index) => (
+                                                        <option key={index} value={value}>{value}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+
+                                            <div className='optionalBox' style={{ marginBottom: "10px" }}>
+                                                <label>Orientación</label>
+                                                <select name="orientation" onChange={(e) => setOrientationSelection(e.target.value)}>
+                                                    <option disabled selected value="">Seleccione</option>
+                                                    <option value={"horizontal"}>Horizontal</option>
+                                                    <option value={"vertical"}>Vertical</option>
+                                                </select>
+                                            </div>
+                                            <label style={{ fontSize: "15px", textDecoration: "underline", color: "#775418" }}>⚠️Los barcos de añaden de <strong>IZQUIERDA a DERECHA</strong> y <strong>ARRIBA hacia ABAJO</strong>⚠️</label>
+
+                                            <button onClick={() => manualSend()}>Guardar</button>
                                         </div>
-
-                                        <div>
-                                            <label>Fila</label>
-                                            <select name="rowData" onChange={(e) => setRowSelection(e.target.value)}>
-                                                <option disabled selected value="">Seleccione</option>
-                                                {rowData.map((value, index) => (
-                                                    <option key={index} value={value}>{value}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-
-                                        <div>
-                                            <label>Columna</label>
-                                            <select name="columnData" onChange={(e) => setColumnSelection(e.target.value)}>
-                                                <option disabled selected value="">Seleccione</option>
-                                                {columnData.map((value, index) => (
-                                                    <option key={index} value={value}>{value}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-
-                                        <div>
-                                            <label>Orientación</label>
-                                            <select name="orientation" onChange={(e) => setOrientationSelection(e.target.value)}>
-                                                <option disabled selected value="">Seleccione</option>
-                                                <option value={"horizontal"}>Horizontal</option>
-                                                <option value={"vertical"}>Vertical</option>
-                                            </select>
-                                        </div>
-
-                                        <button onClick={() => manualSend()}>Guardar</button>
-
-                                        <table>
+                                        <table className='manualComponent'>
                                             <thead>
                                                 <tr>
                                                     <th>Tamaño</th>
-                                                    <th>Fl</th>
-                                                    <th>Clm</th>
-                                                    <th>Pstn</th>
+                                                    <th>Fila</th>
+                                                    <th>Columna</th>
+                                                    <th>Posicion</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {positions.map((item, index) => (
-                                                    <tr key={index}>
+                                                    <tr key={index} id={'trId' + index}>
                                                         <td>{item.ship}</td>
                                                         <td>{item.row}</td>
                                                         <td>{item.column}</td>
                                                         <td>{item.orientation}</td>
+                                                        <td><button onClick={() => delete_(index, item.ship)}>x</button></td>
                                                     </tr>
                                                 ))}
                                             </tbody>

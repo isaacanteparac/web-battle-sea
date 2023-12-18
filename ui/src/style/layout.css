@@ -204,6 +204,95 @@
     font-family: 'Aldrich', sans-serif;
 }
 
+.manual {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    border-top: var(--outerBordersize) #e2dede77 solid;
+    gap: 20px;
+}
+
+.manualComponent button {
+    border: none;
+    background-color: #000;
+    height: 30px;
+    width: 80%;
+    border-radius: var(--internalRoundedEdge);
+    font-size: var(--fontSize);
+    color: white;
+    margin-block: 10px;
+    margin-bottom: 5px;
+}
+
+.manualComponent button:active {
+    background-color: #5f3cf0;
+}
+
+
+.manualComponent {
+    padding-block: 5px;
+    border-radius: var(--internalRoundedEdge);
+    border: var(--outerBordersize) var(--borderColor) solid;
+    background-color: #fff;
+    box-shadow: 3px 3px var(--borderColor);
+
+}
+
+.optionalBox {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    overflow: hidden;
+    border-radius: var(--internalRoundedEdge);
+    font-size: var(--fontSize);
+    height: 30px;
+}
+
+.optionalBox label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    padding-left: 5px;
+
+}
+
+.optionalBox select {
+    height: 100%;
+    background-color: transparent;
+    font-size: var(--fontSize);
+    border: none;
+    border-left: 3px solid var(--borderColor);
+    outline: none;
+}
+
+.optionalBox option {
+    background-color: black;
+    color: white;
+}
+
+.typeGeneration{
+    display: flex;
+    flex-direction: column;
+}
+
+.typeGenerationBtn {
+    border: none;
+    margin: 5px;
+    border-radius: var(--internalRoundedEdge);
+    height: 40px;
+    font-size: var(--fontSize);
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
+}
+
+.typeGenerationBtn:active{
+    background-color: #212121;
+}
+
 
 
 

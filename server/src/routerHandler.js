@@ -29,15 +29,10 @@ routeData.post("/create/board", async (req, res) => {
     if (!data.automatic) {
         random_.run(data)
         board = random_.getMatrix()
-        console.log("generar manualmente")
     } else {
         random_.run()
         board = random_.getMatrix()
-        console.log("generar autoticamente")
-
     }
-    console.log("Board")
-    console.log(data.clicks)
     if (data.clicks === 10) {
         await Users.findOneAndUpdate(
             { idUser: data.idUser },

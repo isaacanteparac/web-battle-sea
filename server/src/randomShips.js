@@ -354,12 +354,9 @@ function placeShipsInMatrix(matrix, ships, data) {
 }
 
 function placeManualShip(matrix, data) {
-    console.log("manualmenteyuy")
-    //console.log(data)
     for (let i = 0; i < data.positions.length; i++) {
         let objPosition = data.positions[i]
         let ship_ = Ship[objPosition.ship]
-        //TODO: TODOS SE AÑADEN DE IZQUIERDA A DERECHA Y DE ARRIBA HACIA ABAJO, POR ESO NO SE AGREGAN ALGUNOS BARCOS
         const rowNumber = parseInt(objPosition.row.substring(1)-1);
         const columnNumber = parseInt(objPosition.column.substring(1)-1 );
         placeAutomaticShip(matrix, rowNumber, columnNumber, objPosition.orientation, ship_)

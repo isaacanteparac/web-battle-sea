@@ -9,10 +9,6 @@ export function setupSocket(server) {
 
     io.on("connection", (socket) => {
 
-        socket.on("close", () => {
-            console.log('Cliente desconectado');
-        });
-
         socket.on("available_players", async () => {
             const data = await Users.findOne({ isActive: true });
             io.emit("available_players", data);
