@@ -21,7 +21,7 @@ function Timer() {
                 setText("Tu turno ")
                 setBg("#fff")
             } else {
-                setText("Turno de enemigo ")
+                setText("Turno de enemigo, espere... ")
                 setBg("#f60d96")
             }
 
@@ -54,7 +54,7 @@ function Timer() {
 
     return (
         <>
-            {!showWinner ? (<label className='yourTurn' style={{ color: bg }}>{`${text} ${seconds}s/${waitTime}s`}</label>)
+            {!showWinner ? (<label className='yourTurn' style={{ color: bg }}>{`${text}`}</label>)
                 : <label className='yourTurn winner'>{text}</label>}
         </>
     );
